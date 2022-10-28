@@ -1,9 +1,35 @@
 #char-list {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 #char-config {
   display: flex;
   flex-direction: column;
+}
+
+#char-table {
+  text-align: center;
+  border-collapse: collapse;
+  display: inline-block;
+  padding: 10px;
+}
+
+#char-table tr:nth-child(3) {
+  color: rgb(58, 150, 255);
+}
+
+#char-table tr:nth-child(3) td {
+  border: 0px transparent;
+}
+
+#char-table td {
+  font-family: Consolas;
+  border: 1px solid rgb(0, 0, 0);
+  padding: 3px 7px;
+  min-width: 30px;
+}
+
+#char-table td:nth-child(1) {
+  font-family: inherit;
 }
