@@ -12,7 +12,12 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="./css/style.css" />
+    <!-- 모듈을 사용할 수 없는 local상황을 가정해 js코드 작성 -->
+    <script defer src="./js/temp.js"></script>
+    <script defer src="./js/global.js"></script>
     <script defer src="./js/setting.js"></script>
+    <script defer src="./js/charTable.js"></script>
+    <script defer src="./js/textView.js"></script>
     <script defer src="./js/script.js"></script>
     <title>Textview</title>
   </head>
@@ -50,16 +55,16 @@
                   type="text"
                   name="from"
                   id="from"
-                  maxlength="1"
-                  size="1"
+                  maxlength="2"
+                  size="2"
                 />
                 <label for="to">To(유니코드)</label>
                 <input type="text" name="to" id="to" maxlength="4" size="4" />
               </div>
               <div id="char-button">
-                <button>추가하기</button>
-                <button>저장하기</button>
-                <button>초기화</button>
+                <button id="char-add">추가하기</button>
+                <button id="char-save">저장하기</button>
+                <button id="char-init">초기화</button>
               </div>
             </div>
             <table id="char-table">
