@@ -12,6 +12,12 @@
   */
   /* 임의로 정한 길이. 추후에 글자 길이에 따라 수정하기 */
   --char-view-w: 140px;
+  --color-blue: rgb(58, 150, 255);
+  --color-dark-blue: rgb(26, 133, 255);
+  --color-black: rgb(0, 0, 0);
+  --color-header: rgb(40, 40, 40);
+  --color-box-shadow: rgba(0, 0, 0, 0.5);
+  --color-white: rgb(255, 255, 255);
 }
 
 * {
@@ -36,8 +42,8 @@ body {
 }
 
 header {
-  background-color: rgb(40, 40, 40);
-  color: rgb(255, 255, 255);
+  background-color: var(--color-header);
+  color: var(--color-white);
   padding: 3px 10px;
   grid-row: 1 / 2;
   display: flex;
@@ -47,6 +53,7 @@ header {
 
 #control {
   grid-row: 2 / 3;
+  padding: 10px;
 }
 
 #view {
@@ -80,8 +87,8 @@ header {
 }
 
 .select {
-  background-color: rgb(58, 150, 255);
-  color: rgb(255, 255, 255);
+  background-color: var(--color-blue);
+  color: var(--color-white);
 }
 
 #char-view {
