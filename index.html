@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/script.js"></script>
+    <title>Textview</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Text viewer</h1>
+        <nav>
+          <div class="nav-item" title="글자 모드 변경 (Alt+v)">
+            <i class="fa-solid fa-eye"></i>
+          </div>
+          <div class="nav-item" title="저장 (Ctrl+s)">
+            <i class="fa-solid fa-floppy-disk"></i>
+          </div>
+          <div class="nav-item" title="현재 페이지 초기화">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <div class="nav-item" title="파일로 합치기">
+            <i class="fa-solid fa-file-export"></i>
+          </div>
+          <div class="nav-item" title="사용법 보기">
+            <i class="fa-solid fa-circle-question"></i>
+          </div>
+        </nav>
+      </header>
+      <section id="control">
+        <div>
+          <p>현재 위치: <span id="current-pos"></span></p>
+          <p>글자 목록</p>
+          <div id="char-list">
+            <table>
+              <tbody>
+                <tr>
+                  <td>From</td>
+                </tr>
+                <tr>
+                  <td>To</td>
+                </tr>
+                <tr>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="char-config">
+              <div id="char-input">
+                <label for="from">From</label>
+                <input
+                  type="text"
+                  name="from"
+                  id="from"
+                  maxlength="1"
+                  size="2"
+                />
+                <label for="to">To</label>
+                <input
+                  type="text"
+                  name="from"
+                  id="from"
+                  maxlength="4"
+                  size="2"
+                />
+              </div>
+              <div id="char-button">
+                <button>추가하기</button>
+                <button>저장하기</button>
+                <button>초기화</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="view">
+        <div id="image-view"></div>
+        <div id="text-view">
+          <table id="text-table"></table>
+        </div>
+        <div id="char-view"></div>
+      </section>
+    </div>
+  </body>
+</html>

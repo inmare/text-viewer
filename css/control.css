@@ -1,0 +1,9 @@
+#char-list {
+  display: flex;
+  flex-direction: row;
+}
+
+#char-config {
+  display: flex;
+  flex-direction: column;
+}

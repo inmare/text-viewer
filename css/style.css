@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/earlyaccess/notosanskr.css");
+@import url("./text-view.css");
+@import url("./header.css");
+@import url("./control.css");
+
+:root {
+  /*
+  Suffix 설명
+  -w: width
+  -h: height
+  */
+  /* 임의로 정한 길이. 추후에 글자 길이에 따라 수정하기 */
+  --char-view-w: 140px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Noto Sans KR";
+  font-weight: bold;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+
+header {
+  background-color: rgb(40, 40, 40);
+  color: rgb(255, 255, 255);
+  padding: 3px 10px;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#control {
+  grid-row: 2 / 3;
+}
+
+#view {
+  grid-row: 3 / 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr var(--char-view-w);
+}
+
+#image-view {
+  grid-column: 1 / 2;
+  background-color: green;
+}
+
+#text-view {
+  grid-column: 2 / 3;
+  /* background-color: skyblue; */
+  position: relative;
+  overflow: auto;
+}
+
+#text-view * {
+  font-family: Consolas;
+  font-size: 18px;
+  line-height: 0.9;
+}
+
+#text-table {
+  position: absolute;
+  user-select: none;
+  text-align: center;
+}
+
+.select {
+  background-color: rgb(58, 150, 255);
+  color: rgb(255, 255, 255);
+}
+
+#char-view {
+  grid-column: 3 / 4;
+  width: 140px;
+  background-color: pink;
+}
