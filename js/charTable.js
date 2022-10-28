@@ -35,11 +35,10 @@ class CharTable {
     toTdList[tdIdx].remove();
     delTdList[tdIdx].remove();
 
-    const fromIdx = this.charList.indexOf(fromChar);
-    const toIdx = this.charList.indexOf(toChar);
+    const idx = this.charList.from.indexOf(fromChar);
 
-    this.charList.from.splice(fromIdx, 1);
-    this.charList.to.splice(toIdx, 1);
+    this.charList.from.splice(idx, 1);
+    this.charList.to.splice(idx, 1);
 
     function getTdIndex(td) {
       const delTdList = $("#del-char > td");
@@ -77,14 +76,13 @@ class CharTable {
     const delTd = document.createElement("td");
     const delBtn = document.createElement("i");
     delBtn.classList.add("fa-solid", "fa-xmark");
-    delBtn.addEventListener("click", this.deleteChar);
+    delBtn.addEventListener("click", this.deleteChar.bind(this));
     delTd.append(delBtn);
     delTr.append(delTd);
   }
 
   static saveCharSetting() {
     const settingString = JSON.stringify(this.charList);
-    console.log(settingString);
     localStorage.setItem(CHAR_SETTING_NAME, settingString);
   }
 }
