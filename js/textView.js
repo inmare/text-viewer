@@ -122,4 +122,32 @@ class TextView {
       }
     }
   }
+
+  static changeView(e) {
+    const changeViewBtn = e.target.closest("#change-view");
+    const logo = changeViewBtn.querySelector("i");
+    logo.classList.toggle("fa-eye");
+    logo.classList.toggle("fa-eye-slash");
+
+    Header.setChangeViewBtnData(changeViewBtn);
+
+    const mode = changeViewBtn.dataset.viewMode;
+    const charList = CharTable.charList;
+    const textViewTd = $("#text-table td");
+    if (mode == "from") {
+      for (let td of textViewTd) {
+        if (charList.from.includes(td.innerText)) {
+          const idx = charList.from.indexOf(td.innerText);
+          td.innerText = charList.to[idx];
+        }
+      }
+    } else if (mode == "to") {
+      for (let td of textViewTd) {
+        if (charList.to.includes(td.innerText)) {
+          const idx = charList.to.indexOf(td.innerText);
+          td.innerText = charList.from[idx];
+        }
+      }
+    }
+  }
 }
