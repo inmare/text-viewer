@@ -8,24 +8,41 @@
   flex-direction: column;
 }
 
+#char-button > button {
+  background-color: var(--color-blue);
+  box-shadow: 1px 1px 5px -1px var(--color-box-shadow);
+  border: 0px transparent;
+  padding: 3px 10px;
+  margin: 7px 2px;
+  border-radius: 5px;
+}
+
+#char-button > button:active {
+  background-color: var(--color-dark-blue);
+}
+
 #char-table {
   text-align: center;
   border-collapse: collapse;
   display: inline-block;
-  padding: 10px;
 }
 
 #char-table tr:nth-child(3) {
-  color: rgb(58, 150, 255);
+  color: var(--color-blue);
 }
 
 #char-table tr:nth-child(3) td {
   border: 0px transparent;
 }
 
+#char-table td > i {
+  cursor: pointer;
+}
+
 #char-table td {
   font-family: Consolas;
-  border: 1px solid rgb(0, 0, 0);
+  /* font-family: MalgunGothic; */
+  border: 1px solid var(--color-black);
   padding: 3px 7px;
   min-width: 30px;
 }
