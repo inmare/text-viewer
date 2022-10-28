@@ -13,9 +13,32 @@ const currentPos = document.querySelector("#current-pos");
 // initTextView();
 const defaultFrom = [];
 const defaultTo = [];
-initTable();
+initCharListTable();
+initTextViewTable();
 
-async function initTable() {
+function initCharListTable() {
+  const fromTr = document.querySelector("#from-char");
+  const toTr = document.querySelector("#to-char");
+  const delTr = document.querySelector("#del-char");
+
+  for (let i = 0; i < charList.from.length; i++) {
+    const fromChar = charList.from[i];
+    const toChar = charList.to[i];
+    const fromTd = document.createElement("td");
+    fromTd.innerText = fromChar;
+    fromTr.append(fromTd);
+
+    const toTd = document.createElement("td");
+    toTd.innerText = toChar;
+    toTr.append(toTd);
+
+    const delTd = document.createElement("td");
+    delTd.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    delTr.append(delTd);
+  }
+}
+
+async function initTextViewTable() {
   const text = await getText();
   for (let i = 0; i < 10; i++) {
     const tr = document.createElement("tr");
