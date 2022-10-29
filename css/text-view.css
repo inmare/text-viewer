@@ -1,11 +1,18 @@
-#text-view::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+#text-view * {
+  font-family: Consolas;
+  /* 맑은 고딕 폰트를 사용하고 싶은 경우
+  위의 줄에서 Consolas를 MalgunGothic으로 바꾸기 */
+  font-size: 18px;
+  line-height: 0.9;
 }
 
-#text-view::-webkit-scrollbar-thumb {
-  background-color: rgb(49, 49, 49);
-  border: 3px solid transparent;
-  border-radius: 5px;
-  background-clip: padding-box;
+#text-table {
+  position: absolute;
+  user-select: none;
+  text-align: center;
+}
+
+.select {
+  background-color: var(--color-blue);
+  color: var(--color-white);
 }
