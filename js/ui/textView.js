@@ -1,7 +1,6 @@
 class TextView {
   static async initialize() {
     window.addEventListener("click", this.removeTdClass);
-    window.addEventListener("keydown", this.moveSelPos);
   }
 
   static updateTextView(info, charPerLine) {
@@ -130,11 +129,10 @@ class TextView {
     }
   }
 
-  static changeView(e) {
-    const changeViewBtn = e.target.closest("#change-view");
+  static changeView() {
+    const changeViewBtn = $("#change-view");
     const logo = changeViewBtn.querySelector("i");
-    logo.classList.toggle("fa-eye");
-    logo.classList.toggle("fa-eye-slash");
+    logo.classList.toggle("header-btn-deactivate");
 
     Header.changeViewBtnData(changeViewBtn);
 
