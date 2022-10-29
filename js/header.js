@@ -3,12 +3,12 @@ class Header {
     // header의 버튼들에 eventListener할당
     const changeViewBtn = $("#change-view");
     // change-view 버튼 데이터 속성 초기화
-    this.setChangeViewBtnData(changeViewBtn);
+    this.changeViewBtnData(changeViewBtn);
 
     changeViewBtn.addEventListener("click", TextView.changeView);
   }
 
-  static setChangeViewBtnData(btn) {
+  static changeViewBtnData(btn) {
     const logoClassList = btn.querySelector("i").classList;
     for (let clsName of logoClassList) {
       if (clsName == "fa-eye") {
