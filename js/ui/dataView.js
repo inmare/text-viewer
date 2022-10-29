@@ -13,9 +13,20 @@ class DataView {
       const id = dbDiv.querySelector("span[data-info='id']");
       const name = dbDiv.querySelector("span[data-info='name']");
       const lastSaved = dbDiv.querySelector("span[data-info='last-saved']");
+
+      dbDiv.querySelector(".db-div").setAttribute("data-project-id", data.id);
+
       id.innerText = data.id;
       name.innerText = data.name;
       lastSaved.innerText = formatTime(data.lastSaved);
+
+      const importBtn = dbDiv.querySelector("i[data-button='import']");
+      const downloadBtn = dbDiv.querySelector("i[data-button='download']");
+      const deleteBtn = dbDiv.querySelector("i[data-button='delete']");
+
+      importBtn.addEventListener("click", Database.callDatabase);
+      downloadBtn.addEventListener("click", Database.downloadData);
+      deleteBtn.addEventListener("click", Database.deleteData);
 
       databaseView.append(dbDiv);
     }
