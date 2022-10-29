@@ -19,7 +19,10 @@
     <script defer src="./js/util/global.js"></script>
     <script defer src="./js/util/setting.js"></script>
     <script defer src="./js/util/shortcut.js"></script>
+    <!-- database -->
+    <script defer src="./js/database/database.js"></script>
     <!-- ui -->
+    <script defer src="./js/ui/dataView.js"></script>
     <script defer src="./js/ui/charTable.js"></script>
     <script defer src="./js/ui/textView.js"></script>
     <script defer src="./js/ui/header.js"></script>
@@ -104,30 +107,7 @@
           <div id="data-info">
             <div id="database-info">
               <p>데이터베이스 정보</p>
-              <div id="database-view">
-                <div class="db-div">
-                  <div class="db-div-info">
-                    <p>id</p>
-                    <p>이름</p>
-                    <p>저장 시간</p>
-                  </div>
-                  <div class="db-div-icon">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <i class="fa-solid fa-trash"></i>
-                  </div>
-                </div>
-                <div class="db-div">
-                  <div class="db-div-info">
-                    <p>id</p>
-                    <p>이름</p>
-                    <p>저장 시간</p>
-                  </div>
-                  <div class="db-div-icon">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <i class="fa-solid fa-trash"></i>
-                  </div>
-                </div>
-              </div>
+              <div id="database-view"></div>
             </div>
             <div id="page-info">
               <p>페이지 정보</p>
@@ -146,5 +126,19 @@
         <div id="char-view"></div>
       </section>
     </div>
+    <template id="database-template">
+      <div class="db-div">
+        <div class="db-div-info">
+          <p>ID: <span data-info="id"></span></p>
+          <p>이름: <span data-info="name"></span></p>
+          <p>저장된 시간: <span data-info="last-saved"></span></p>
+        </div>
+        <div class="db-div-icon">
+          <i class="fa-solid fa-cloud-arrow-up" title="불러오기"></i>
+          <i class="fa-solid fa-download" title="다운로드"></i>
+          <i class="fa-solid fa-trash" title="삭제"></i>
+        </div>
+      </div>
+    </template>
   </body>
 </html>
