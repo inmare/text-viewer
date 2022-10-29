@@ -1,4 +1,6 @@
 class Database {
+  static currentProject;
+
   static async initialize() {
     const imgData = await getImage();
     const textData = await getText();
@@ -33,7 +35,7 @@ class Database {
         lastSaved: new Date(),
         charPerLine: 20,
         linePerPage: 10,
-        images: [
+        info: [
           {
             data: imgData,
             page: 1,
@@ -73,7 +75,7 @@ class Database {
     };
   }
 
-  static callDatabase() {
+  static callDatabase(e) {
     const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
     dbOpenRequest.onerror = function () {
@@ -89,16 +91,38 @@ class Database {
 
       // 프로젝트의 갯수가 적을 거라고 가정하고 getAll사용
       // 나중에는 cursor를 사용하는 것도 고려해보기
-      const request = projects.getAll();
+
+      let request;
+
+      if (e.target?.id == "load-database") {
+        request = projects.getAll();
+      } else {
+        const id = e.target.closest(".db-div").dataset.projectId;
+        request = projects.get(id);
+      }
 
       request.onsuccess = function () {
         const result = request.result;
-        DataView.updateDataView(result);
+
+        if (e.target?.id == "load-database") {
+          DataView.updateDataView(result);
+        } else {
+          Database.importData(result);
+        }
       };
 
       request.onerror = function () {
         console.log("Error", request.error);
       };
     };
+  }
+
+  static importData(data) {
+    this.currentProject = data;
+    const charPerLine = data.charPerLine;
+    const info = data.info[0];
+
+    TextView.updateTextView(info, charPerLine);
+    ImageView.updateImageView(info);
   }
 }
