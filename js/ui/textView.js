@@ -1,12 +1,13 @@
 class TextView {
   static async initialize() {
     const text = await getText();
+    await getImage();
     const textTable = $("#text-table");
     for (let i = 0; i < 10; i++) {
       const tr = document.createElement("tr");
       tr.setAttribute("data-trIdx", i + 1);
       textTable.append(tr);
-      for (let j = 0; j < 10; j++) {
+      for (let j = 0; j < 20; j++) {
         const td = document.createElement("td");
         td.setAttribute("data-tdIdx", j + 1);
         td.innerText = text[i * 10 + j];
