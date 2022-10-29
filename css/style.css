@@ -79,6 +79,7 @@ header {
 
 #image-view {
   grid-column: 1 / 2;
+  position: relative;
   overflow: auto;
 }
 
@@ -92,9 +93,16 @@ header {
 #char-view {
   grid-column: 3 / 4;
   width: 140px;
+  background-color: var(--color-dark-gray);
 }
 
 @media screen and (max-width: 700px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    padding: 7px;
+  }
+
   #control {
     flex-direction: column;
   }
