@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Database.initialize();
   CharTable.initialize();
   TextView.initialize();
+  ImageView.initialize();
   Header.initialize();
   Shortcut.initialize();
   DataView.initialize();
