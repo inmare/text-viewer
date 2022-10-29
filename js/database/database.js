@@ -1,5 +1,8 @@
 class Database {
-  static initialize() {
+  static async initialize() {
+    const imgData = await getImage();
+    const textData = await getText();
+
     const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
     // 처음 데이터 베이스를 생성해서 버전이 0일때
@@ -16,21 +19,44 @@ class Database {
       console.error("Error", dbOpenRequest.error);
     };
 
-    dbOpenRequest.onsuccess = function () {
+    dbOpenRequest.onsuccess = async function () {
       // 임시 데이터 추가하기
       console.log("데이터 베이스 불러오기 성공");
       const db = dbOpenRequest.result;
       const transaction = db.transaction(OBJECT_STORE_NAME, "readwrite");
       const projects = transaction.objectStore(OBJECT_STORE_NAME);
 
+      // 샘플 데이터 만들기
       const proj = {
         id: "SAMPLE_PROJ", // 유일해야 하는 값. 나중에 랜덤한 해시 붙이기
-        name: "SAMPLE_NAME",
+        name: "PROJECT_NAME",
         lastSaved: new Date(),
-        charPerLine: 230,
-        linePerPage: 168,
+        charPerLine: 20,
+        linePerPage: 10,
         images: [
-          // information about image
+          {
+            data: imgData,
+            page: 1,
+            size: [200, 200], // [x, y]
+            text: textData,
+            cropPoints: {
+              horizontal: [
+                0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140,
+                150, 160, 170, 180, 190, 200,
+              ],
+              vertical: [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200],
+            },
+            lowPercentChar: [
+              {
+                char: "L",
+                index: 0,
+              },
+              {
+                char: "o",
+                index: 1,
+              },
+            ],
+          },
         ],
       };
 
