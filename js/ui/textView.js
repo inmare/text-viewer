@@ -1,22 +1,25 @@
 class TextView {
   static async initialize() {
-    const text = await getText();
-    await getImage();
+    window.addEventListener("click", this.removeTdClass);
+    window.addEventListener("keydown", this.moveSelPos);
+  }
+
+  static updateTextView(info, charPerLine) {
+    const actualLineLen = info.text.length / charPerLine;
+    const text = info.text;
     const textTable = $("#text-table");
-    for (let i = 0; i < 10; i++) {
+    for (let line = 0; line < actualLineLen; line++) {
       const tr = document.createElement("tr");
-      tr.setAttribute("data-trIdx", i + 1);
+      tr.setAttribute("data-trIdx", line + 1);
       textTable.append(tr);
-      for (let j = 0; j < 20; j++) {
+      for (let char = 0; char < charPerLine; char++) {
         const td = document.createElement("td");
-        td.setAttribute("data-tdIdx", j + 1);
-        td.innerText = text[i * 10 + j];
+        td.setAttribute("data-tdIdx", char + 1);
+        td.innerText = text[line * charPerLine + char];
         td.addEventListener("click", this.addTdClass);
         tr.append(td);
       }
     }
-    window.addEventListener("click", this.removeTdClass);
-    window.addEventListener("keydown", this.moveSelPos);
   }
 
   static removeTdClass(e) {
