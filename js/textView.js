@@ -71,6 +71,9 @@ class TextView {
       }
       const asciiRegex = /^[\u0020-\u007f]$/u;
       if (e.key.match(asciiRegex)) {
+        if (e.altKey) {
+          return;
+        }
         e.preventDefault();
         selectedTd.innerText = e.key;
       }
@@ -129,7 +132,7 @@ class TextView {
     logo.classList.toggle("fa-eye");
     logo.classList.toggle("fa-eye-slash");
 
-    Header.setChangeViewBtnData(changeViewBtn);
+    Header.changeViewBtnData(changeViewBtn);
 
     const mode = changeViewBtn.dataset.viewMode;
     const charList = CharTable.charList;
