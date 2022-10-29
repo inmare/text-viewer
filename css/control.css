@@ -1,3 +1,17 @@
+#control button {
+  background-color: var(--color-blue);
+  box-shadow: 1px 1px 5px -1px var(--color-box-shadow);
+  border: 0px transparent;
+  padding: 3px 10px;
+  margin: 7px 2px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#control button:active {
+  background-color: var(--color-dark-blue);
+}
+
 #char-list {
   display: flex;
   flex-direction: column;
@@ -6,19 +20,6 @@
 #char-config {
   display: flex;
   flex-direction: column;
-}
-
-#char-button > button {
-  background-color: var(--color-blue);
-  box-shadow: 1px 1px 5px -1px var(--color-box-shadow);
-  border: 0px transparent;
-  padding: 3px 10px;
-  margin: 7px 2px;
-  border-radius: 5px;
-}
-
-#char-button > button:active {
-  background-color: var(--color-dark-blue);
 }
 
 #char-table {
@@ -41,7 +42,8 @@
 
 #char-table td {
   font-family: Consolas;
-  /* font-family: MalgunGothic; */
+  /* 맑은 고딕 폰트를 사용하고 싶은 경우
+  위의 줄에서 Consolas를 MalgunGothic으로 바꾸기 */
   border: 1px solid var(--color-black);
   padding: 3px 7px;
   min-width: 30px;
@@ -49,4 +51,116 @@
 
 #char-table td:nth-child(1) {
   font-family: inherit;
+}
+
+#load-setting {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#load-file-wrapper {
+  background-color: var(--color-blue);
+  box-shadow: 1px 1px 5px -1px var(--color-box-shadow);
+  border-radius: 5px;
+  padding: 3px 10px;
+  margin: 2px 2px;
+  display: inline-block;
+}
+
+#load-file-wrapper * {
+  cursor: pointer;
+}
+
+#load-file-wrapper > input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+}
+
+#data-info {
+  flex-grow: 1;
+  background-color: rgb(230, 230, 230);
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 5px;
+  padding: 5px;
+  min-width: 350px;
+}
+
+#database-info {
+  display: flex;
+  flex-direction: column;
+}
+
+#database-info > p {
+  text-align: center;
+}
+
+#database-view {
+  flex-grow: 1;
+  max-height: 96px;
+  overflow: auto;
+  background-color: rgb(200, 200, 200);
+}
+
+#page-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#page-view {
+  flex-grow: 1;
+  max-height: 96px;
+  overflow: auto;
+  background-color: rgb(200, 200, 200);
+}
+
+.db-div {
+  display: flex;
+  text-align: left;
+  margin: 5px 2px 5px 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgb(170, 170, 170);
+}
+
+.db-div-info {
+  flex-grow: 1;
+}
+
+.db-div-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.db-div-icon > i {
+  font-size: 1.2rem;
+  padding: 3px;
+  cursor: pointer;
+  opacity: 50%;
+}
+
+.db-div-icon > i:hover {
+  opacity: 100%;
+}
+
+.db-div-icon > .fa-cloud-arrow-up {
+  color: var(--color-dark-gray);
+}
+
+.db-div-icon > .fa-trash {
+  color: rgb(185, 0, 0);
+}
+
+@media screen and (max-width: 700px) {
+  #load-setting {
+    align-items: flex-start;
+  }
 }
