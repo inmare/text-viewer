@@ -1,5 +1,3 @@
-const CHAR_SETTING_NAME = "MSM_CHAR_TABLE";
-
 function $(selector) {
   const elemArray = document.querySelectorAll(selector);
   const length = elemArray.length;
