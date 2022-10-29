@@ -12,14 +12,26 @@
   background-color: var(--color-dark-blue);
 }
 
+#char-setting {
+  padding: 10px;
+  text-align: center;
+}
+
+#char-setting > h2 {
+  font-size: 1.4rem;
+  padding: 5px;
+}
+
 #char-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 #char-config {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 #char-table {
@@ -57,6 +69,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  padding: 10px;
 }
 
 #load-file-wrapper {
@@ -103,9 +116,9 @@
 
 #database-view {
   flex-grow: 1;
-  max-height: 96px;
   overflow: auto;
   background-color: rgb(200, 200, 200);
+  max-height: 115px;
 }
 
 #page-info {
@@ -116,15 +129,15 @@
 
 #page-view {
   flex-grow: 1;
-  max-height: 96px;
   overflow: auto;
   background-color: rgb(200, 200, 200);
+  max-height: 115px;
 }
 
 .db-div {
   display: flex;
   text-align: left;
-  margin: 5px 2px 5px 5px;
+  margin: 5px;
   padding: 5px;
   border-radius: 5px;
   background-color: rgb(170, 170, 170);
