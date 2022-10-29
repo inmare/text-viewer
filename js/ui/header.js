@@ -10,14 +10,10 @@ class Header {
 
   static changeViewBtnData(btn) {
     const logoClassList = btn.querySelector("i").classList;
-    for (let clsName of logoClassList) {
-      if (clsName == "fa-eye") {
-        btn.setAttribute("data-view-mode", "from");
-        break;
-      } else if (clsName == "fa-eye-slash") {
-        btn.setAttribute("data-view-mode", "to");
-        break;
-      }
+    if (logoClassList.contains("header-btn-deactivate")) {
+      btn.setAttribute("data-view-mode", "from");
+    } else {
+      btn.setAttribute("data-view-mode", "to");
     }
   }
 }
