@@ -65,9 +65,8 @@ header {
 
 #control {
   grid-row: 2 / 3;
-  padding: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 #view {
