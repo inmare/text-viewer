@@ -19,6 +19,7 @@
     <script defer src="./js/charTable.js"></script>
     <script defer src="./js/textView.js"></script>
     <script defer src="./js/header.js"></script>
+    <script defer src="./js/shortcut.js"></script>
     <script defer src="./js/script.js"></script>
     <title>Textview</title>
   </head>
@@ -45,7 +46,7 @@
         </nav>
       </header>
       <section id="control">
-        <div>
+        <div id="char-setting">
           <p>현재 위치: <span id="current-pos"></span> (페이지, 줄, 글자)</p>
           <p>글자 목록</p>
           <div id="char-list">
@@ -83,9 +84,54 @@
             </table>
           </div>
         </div>
+        <div id="load-setting">
+          <p>데이터 로드하기</p>
+          <div id="load-buttons">
+            <div id="load-file-wrapper">
+              <label for="load-file">파일에서 로드</label>
+              <input type="file" name="load-file" id="load-file" />
+            </div>
+            <button id="load-database">데이터베이스에서 로드</button>
+          </div>
+          <div id="data-info">
+            <div id="database-info">
+              <p>데이터베이스 정보</p>
+              <div id="database-view">
+                <div class="db-div">
+                  <div class="db-div-info">
+                    <p>id</p>
+                    <p>이름</p>
+                    <p>저장 시간</p>
+                  </div>
+                  <div class="db-div-icon">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <i class="fa-solid fa-trash"></i>
+                  </div>
+                </div>
+                <div class="db-div">
+                  <div class="db-div-info">
+                    <p>id</p>
+                    <p>이름</p>
+                    <p>저장 시간</p>
+                  </div>
+                  <div class="db-div-icon">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <i class="fa-solid fa-trash"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="page-info">
+              <p>페이지 정보</p>
+              <div id="page-view"></div>
+            </div>
+          </div>
+        </div>
       </section>
       <section id="view">
-        <div id="image-view"></div>
+        <div id="image-view">
+          <canvas id="image-canvas"></canvas>
+        </div>
         <div id="text-view">
           <table id="text-table"></table>
         </div>
