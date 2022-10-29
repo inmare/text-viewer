@@ -22,3 +22,7 @@ nav {
 .nav-item:hover {
   color: rgb(58, 150, 255);
 }
+
+.header-btn-deactivate {
+  opacity: 50%;
+}

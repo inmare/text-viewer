@@ -74,11 +74,11 @@ header {
   grid-row: 3 / 4;
   display: grid;
   grid-template-columns: 1fr 1fr var(--char-view-w);
+  border-top: 1px solid var(--color-black);
 }
 
 #image-view {
   grid-column: 1 / 2;
-  background-color: green;
   overflow: auto;
 }
 
@@ -92,7 +92,6 @@ header {
 #char-view {
   grid-column: 3 / 4;
   width: 140px;
-  background-color: pink;
 }
 
 @media screen and (max-width: 700px) {
