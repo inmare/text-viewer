@@ -1,25 +1,29 @@
 class Shortcut {
   static initialize() {
-    window.addEventListener("keydown", this.detectShortcut);
+    window.addEventListener("keydown", this.detectShortcut.bind(this));
   }
 
   static detectShortcut(e) {
     const isTextTableActivate = checkTextViewActivate();
     if (isTextTableActivate) {
-      for (let [_, value] of Object.entries(TEXT_TABLE_SHORTCUT)) {
+      for (let [_, value] of Object.entries(this.TEXT_TABLE_SHORTCUT)) {
         const isSubKeyMatch = checkSubKeyMatch(value);
+
         if (value.key == e.key && isSubKeyMatch) {
           // do something about text table
-          TextView.moveSelPos(e.key);
+          e.preventDefault();
+          value.callback(e.key);
           return;
         }
       }
     }
 
-    for (let [_, value] of Object.entries(SHORTCUT)) {
+    for (let [_, value] of Object.entries(this.SHORTCUT)) {
       const isSubKeyMatch = checkSubKeyMatch(value);
       if (value.key == e.key && isSubKeyMatch) {
         // do something about shortcut
+        e.preventDefault();
+        value.callback();
         return;
       }
     }
@@ -49,35 +53,35 @@ class Shortcut {
     moveRight: {
       key: "ArrowRight",
       altKey: false,
-      ctrlkey: false,
+      ctrlKey: false,
       shiftKey: false,
       callback: TextView.moveTdPos,
     },
     moveLeft: {
       key: "ArrowLeft",
       altKey: false,
-      ctrlkey: false,
+      ctrlKey: false,
       shiftKey: false,
       callback: TextView.moveTdPos,
     },
     moveUp: {
       key: "ArrowUp",
       altKey: false,
-      ctrlkey: false,
+      ctrlKey: false,
       shiftKey: false,
       callback: TextView.moveTdPos,
     },
     moveDown: {
       key: "ArrowDown",
       altKey: false,
-      ctrlkey: false,
+      ctrlKey: false,
       shiftKey: false,
       callback: TextView.moveTdPos,
     },
     putText: {
       key: /^([\u0020-\u007e]|Enter|Tab)$/,
       altKey: false,
-      ctrlkey: false,
+      ctrlKey: false,
       shiftKey: false,
       callback: TextView.changeTdText,
     },
@@ -87,14 +91,14 @@ class Shortcut {
     save: {
       key: "s",
       altKey: false,
-      ctrlkey: true,
+      ctrlKey: true,
       shiftKey: false,
       callback: null,
     },
     changeView: {
       key: "v",
       altKey: true,
-      ctrlkey: false,
+      ctrlKey: false,
       shiftKey: false,
       callback: null,
     },

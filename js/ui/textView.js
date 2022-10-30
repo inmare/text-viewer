@@ -9,13 +9,13 @@ class TextView {
     const textTable = $("#text-table");
     for (let line = 0; line < actualLineLen; line++) {
       const tr = document.createElement("tr");
-      tr.setAttribute("data-trIdx", line + 1);
+      tr.setAttribute("data-tr-idx", line + 1);
       textTable.append(tr);
       for (let char = 0; char < charPerLine; char++) {
         const td = document.createElement("td");
-        td.setAttribute("data-tdIdx", char + 1);
+        td.setAttribute("data-td-idx", char + 1);
         td.innerText = text[line * charPerLine + char];
-        td.addEventListener("click", this.addTdClass);
+        td.addEventListener("click", this.addTdClass.bind(this));
         tr.append(td);
       }
     }
@@ -43,88 +43,89 @@ class TextView {
     } else {
       e.target.classList.add("select");
     }
-    const tr = e.target.parentElement;
-    const lineIdx = tr.getAttribute("data-trIdx");
-    const charIdx = e.target.getAttribute("data-tdIdx");
+    this.showCurrentTdPos(e.target);
+  }
+
+  // 후에 더 적절한 위치로 옮기기
+  static showCurrentTdPos(td) {
+    const tr = td.parentElement;
+    const lineIdx = tr.dataset.trIdx;
+    const charIdx = td.dataset.tdIdx;
 
     const currentPos = $("#current-pos");
     currentPos.innerText = `1, ${lineIdx}, ${charIdx}`;
   }
 
-  static moveSelPos(e) {
+  static moveTdPos(key) {
     const selectedTd = $(".select");
-    if (selectedTd) {
-      switch (e.key) {
-        case "ArrowRight": {
-          moveRight();
-          break;
-        }
-        case "ArrowLeft": {
-          moveLeft();
-          break;
-        }
-        case "ArrowUp": {
-          moveUp();
-          break;
-        }
-        case "ArrowDown": {
-          moveDown();
-          break;
-        }
+    let targetTd;
+    switch (key) {
+      case "ArrowRight": {
+        targetTd = moveRight();
+        break;
       }
-      const asciiRegex = /^[\u0020-\u007f]$/u;
-      if (e.key.match(asciiRegex)) {
-        if (e.altKey) {
-          return;
-        }
-        e.preventDefault();
-        selectedTd.innerText = e.key;
+      case "ArrowLeft": {
+        targetTd = moveLeft();
+        break;
+      }
+      case "ArrowUp": {
+        targetTd = moveUp();
+        break;
+      }
+      case "ArrowDown": {
+        targetTd = moveDown();
+        break;
       }
     }
 
+    if (targetTd) {
+      targetTd.dispatchEvent(new Event("click"));
+      ImageView.drawRectOnChar(targetTd);
+    }
+
     function moveDown() {
-      e.preventDefault();
       const parentTr = selectedTd.parentElement;
       const nextTr = parentTr.nextElementSibling;
       if (nextTr) {
         const siblingTd = parentTr.querySelectorAll("td");
         const tdIdx = Array.from(siblingTd).indexOf(selectedTd);
         const nextTd = nextTr.querySelectorAll("td");
-        const target = nextTd[tdIdx];
-        const event = new Event("click");
-        target.dispatchEvent(event);
+        const targetTd = nextTd[tdIdx];
+        return targetTd;
+      } else {
+        return null;
       }
     }
 
     function moveUp() {
-      e.preventDefault();
       const parentTr = selectedTd.parentElement;
       const previousTr = parentTr.previousElementSibling;
       if (previousTr) {
         const siblingTd = parentTr.querySelectorAll("td");
         const tdIdx = Array.from(siblingTd).indexOf(selectedTd);
         const previousTd = previousTr.querySelectorAll("td");
-        const target = previousTd[tdIdx];
-        const event = new Event("click");
-        target.dispatchEvent(event);
+        const targetTd = previousTd[tdIdx];
+        return targetTd;
+      } else {
+        return null;
       }
     }
 
     function moveLeft() {
-      e.preventDefault();
-      const target = selectedTd.previousElementSibling;
-      if (target) {
-        const event = new Event("click");
-        target.dispatchEvent(event);
+      const targetTd = selectedTd.previousElementSibling;
+      if (targetTd) {
+        return targetTd;
+      } else {
+        return null;
       }
     }
 
     function moveRight() {
-      e.preventDefault();
-      const target = selectedTd.nextElementSibling;
-      if (target) {
-        const event = new Event("click");
-        target.dispatchEvent(event);
+      const targetTd = selectedTd.nextElementSibling;
+      if (targetTd) {
+        return targetTd;
+      } else {
+        return null;
       }
     }
   }
