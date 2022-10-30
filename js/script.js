@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   TextView.initialize();
   ImageView.initialize();
   Header.initialize();
-  Shortcut.initialize();
   DataView.initialize();
+
+  Shortcut.initialize();
 });
