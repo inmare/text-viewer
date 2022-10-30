@@ -17,4 +17,12 @@ class ImageView {
     ctx.scale(scaleFactor, scaleFactor);
     ctx.putImageData(info.data, 0, 0);
   }
+
+  static drawRectOnChar(td) {
+    const tr = td.parentElement;
+    const lineIdx = tr.dataset.trIdx;
+    const charIdx = td.dataset.tdIdx;
+    // 나중에 페이지 위치도 알 수 있게 추가하기
+    const pageIdx = 1;
+  }
 }
