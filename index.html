@@ -18,7 +18,6 @@
     <!-- util -->
     <script defer src="./js/util/global.js"></script>
     <script defer src="./js/util/setting.js"></script>
-    <script defer src="./js/util/shortcut.js"></script>
     <!-- database -->
     <script defer src="./js/database/database.js"></script>
     <!-- ui -->
@@ -27,6 +26,9 @@
     <script defer src="./js/ui/textView.js"></script>
     <script defer src="./js/ui/imageView.js"></script>
     <script defer src="./js/ui/header.js"></script>
+    <!-- shortcut -->
+    <!-- 콜백에 다른 함수들을 등록해야 되기 때문에 제일 마지막에 선언 -->
+    <script defer src="./js/util/shortcut.js"></script>
     <!-- main -->
     <script defer src="./js/script.js"></script>
     <title>Textview</title>
@@ -39,7 +41,7 @@
           <div class="nav-item" title="글자 목록 토글">
             <i class="fa-solid fa-font"></i>
           </div>
-          <div class="nav-item" title="데이터베이스 설정 토글">
+          <div class="nav-item" title="데이터베이스 정보 토글">
             <i class="fa-solid fa-database"></i>
           </div>
           <div id="change-view" class="nav-item" title="글자 모드 변경 (Alt+v)">
