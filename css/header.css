@@ -20,7 +20,7 @@ nav {
 }
 
 .nav-item:hover {
-  color: rgb(58, 150, 255);
+  color: var(--color-blue);
 }
 
 .header-btn-deactivate {
