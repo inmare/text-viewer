@@ -1,12 +1,69 @@
+// 모듈을 사용할 수 없기 때문에 다른 함수들이 다 선언되고 난 뒤에
+// 단축키 종류를 선언해 단축키에 callback을 설정 할 수 있도록 함
+const TEXT_TABLE_SHORTCUT = {
+  moveRight: {
+    key: "ArrowRight",
+    altKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    callback: TextView.moveTdPos,
+  },
+  moveLeft: {
+    key: "ArrowLeft",
+    altKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    callback: TextView.moveTdPos,
+  },
+  moveUp: {
+    key: "ArrowUp",
+    altKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    callback: TextView.moveTdPos,
+  },
+  moveDown: {
+    key: "ArrowDown",
+    altKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    callback: TextView.moveTdPos,
+  },
+  putText: {
+    key: /^([\u0020-\u007e]|Enter|Tab)$/,
+    altKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    callback: TextView.changeTdText,
+  },
+};
+
+const SHORTCUT = {
+  save: {
+    key: "s",
+    altKey: false,
+    ctrlKey: true,
+    shiftKey: false,
+    callback: null,
+  },
+  changeView: {
+    key: "v",
+    altKey: true,
+    ctrlKey: false,
+    shiftKey: false,
+    callback: null,
+  },
+};
+
 class Shortcut {
   static initialize() {
     window.addEventListener("keydown", this.detectShortcut.bind(this));
   }
 
   static detectShortcut(e) {
-    const isTextTableActivate = checkTextViewActivate();
-    if (isTextTableActivate) {
-      for (let [_, value] of Object.entries(this.TEXT_TABLE_SHORTCUT)) {
+    const isTextTableActive = checkTextTableActive();
+    if (isTextTableActive) {
+      for (let [_, value] of Object.entries(TEXT_TABLE_SHORTCUT)) {
         const isSubKeyMatch = checkSubKeyMatch(value);
 
         if (value.key == e.key && isSubKeyMatch) {
@@ -18,7 +75,7 @@ class Shortcut {
       }
     }
 
-    for (let [_, value] of Object.entries(this.SHORTCUT)) {
+    for (let [_, value] of Object.entries(SHORTCUT)) {
       const isSubKeyMatch = checkSubKeyMatch(value);
       if (value.key == e.key && isSubKeyMatch) {
         // do something about shortcut
@@ -28,7 +85,7 @@ class Shortcut {
       }
     }
 
-    function checkTextViewActivate() {
+    function checkTextTableActive() {
       const selectTd = $(".select");
       if (selectTd) {
         return true;
@@ -46,61 +103,4 @@ class Shortcut {
       return isSubKeyMatch;
     }
   }
-
-  // 모듈을 사용할 수 없기 때문에 다른 함수들이 다 선언되고 난 뒤인
-  // Shortcut 클래스 안에 직접 선언을 해서 단축키에 callback을 설정 할 수 있도록 함
-  static TEXT_TABLE_SHORTCUT = {
-    moveRight: {
-      key: "ArrowRight",
-      altKey: false,
-      ctrlKey: false,
-      shiftKey: false,
-      callback: TextView.moveTdPos,
-    },
-    moveLeft: {
-      key: "ArrowLeft",
-      altKey: false,
-      ctrlKey: false,
-      shiftKey: false,
-      callback: TextView.moveTdPos,
-    },
-    moveUp: {
-      key: "ArrowUp",
-      altKey: false,
-      ctrlKey: false,
-      shiftKey: false,
-      callback: TextView.moveTdPos,
-    },
-    moveDown: {
-      key: "ArrowDown",
-      altKey: false,
-      ctrlKey: false,
-      shiftKey: false,
-      callback: TextView.moveTdPos,
-    },
-    putText: {
-      key: /^([\u0020-\u007e]|Enter|Tab)$/,
-      altKey: false,
-      ctrlKey: false,
-      shiftKey: false,
-      callback: TextView.changeTdText,
-    },
-  };
-
-  static SHORTCUT = {
-    save: {
-      key: "s",
-      altKey: false,
-      ctrlKey: true,
-      shiftKey: false,
-      callback: null,
-    },
-    changeView: {
-      key: "v",
-      altKey: true,
-      ctrlKey: false,
-      shiftKey: false,
-      callback: null,
-    },
-  };
 }
