@@ -38,14 +38,21 @@
       <header>
         <h1>Text viewer</h1>
         <nav>
-          <div class="nav-item" title="글자 목록 토글">
+          <div id="toggle-char-list" class="nav-item" title="글자 목록 토글">
             <i class="fa-solid fa-font"></i>
           </div>
-          <div class="nav-item" title="데이터베이스 정보 토글">
+          <div
+            id="toggle-database"
+            class="nav-item"
+            title="데이터베이스 정보 토글"
+          >
             <i class="fa-solid fa-database"></i>
           </div>
           <div id="change-view" class="nav-item" title="글자 모드 변경 (Alt+v)">
             <i class="fa-solid fa-eye header-btn-deactivate"></i>
+          </div>
+          <div id="zoom-image" class="nav-item" title="사진 확대">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
           </div>
           <div class="nav-item" title="저장 (Ctrl+s)">
             <i class="fa-solid fa-floppy-disk"></i>
@@ -84,9 +91,9 @@
                 <input type="text" name="to" id="to" maxlength="4" size="4" />
               </div>
               <div id="char-button">
-                <button id="char-add">추가하기</button>
-                <button id="char-save">저장하기</button>
-                <button id="char-init">초기화</button>
+                <button id="char-add" class="control-btn">추가하기</button>
+                <button id="char-save" class="control-btn">저장하기</button>
+                <button id="char-init" class="control-btn">초기화</button>
               </div>
             </div>
             <table id="char-table">
@@ -107,20 +114,22 @@
         <div id="load-setting">
           <p>데이터 로드하기</p>
           <div id="load-buttons">
-            <div id="load-file-wrapper">
+            <div class="control-btn">
               <label for="load-file">파일에서 로드</label>
               <input type="file" name="load-file" id="load-file" />
             </div>
-            <button id="load-database">데이터베이스에서 로드</button>
+            <button id="load-database" class="control-btn">
+              데이터베이스에서 로드
+            </button>
           </div>
-          <div id="data-info">
+          <div id="data-info" class="info">
             <div id="database-info">
               <p>데이터베이스 정보</p>
-              <div id="database-view"></div>
+              <div id="database-view" class="info-view"></div>
             </div>
-            <div id="page-info">
+            <div id="page-info" class="info">
               <p>페이지 정보</p>
-              <div id="page-view"></div>
+              <div id="page-view" class="info-view"></div>
             </div>
           </div>
         </div>
