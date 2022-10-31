@@ -1,17 +1,3 @@
-#control button {
-  background-color: var(--color-blue);
-  box-shadow: 1px 1px 5px -1px var(--color-box-shadow);
-  border: 0px transparent;
-  padding: 3px 10px;
-  margin: 7px 2px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#control button:active {
-  background-color: var(--color-dark-blue);
-}
-
 #char-setting {
   padding: 10px;
   text-align: center;
@@ -72,20 +58,26 @@
   padding: 10px;
 }
 
-#load-file-wrapper {
+.control-btn {
   background-color: var(--color-blue);
   box-shadow: 1px 1px 5px -1px var(--color-box-shadow);
-  border-radius: 5px;
+  border: 0px transparent;
   padding: 3px 10px;
-  margin: 2px 2px;
+  margin: 7px 2px;
+  border-radius: 5px;
+  cursor: pointer;
   display: inline-block;
 }
 
-#load-file-wrapper * {
+.control-btn:active {
+  background-color: var(--color-dark-blue);
+}
+
+.control-btn > * {
   cursor: pointer;
 }
 
-#load-file-wrapper > input[type="file"] {
+.control-btn > input[type="file"] {
   position: absolute;
   width: 0;
   height: 0;
@@ -96,7 +88,7 @@
 
 #data-info {
   flex-grow: 1;
-  background-color: rgb(230, 230, 230);
+  background-color: var(--color-light-gray);
   border-radius: 5px;
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -105,33 +97,24 @@
   min-width: 400px;
 }
 
-#database-info {
+.info {
   display: flex;
   flex-direction: column;
 }
 
-#database-info > p {
+.info p {
   text-align: center;
 }
 
-#database-view {
+.info-view {
   flex-grow: 1;
   overflow: auto;
-  background-color: rgb(200, 200, 200);
-  max-height: 115px;
-}
-
-#page-info {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
-
-#page-view {
-  flex-grow: 1;
-  overflow: auto;
-  background-color: rgb(200, 200, 200);
+  background-color: var(--color-gray);
   height: 115px;
+}
+
+.info-view p {
+  text-align: left;
 }
 
 .db-div {
