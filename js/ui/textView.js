@@ -9,13 +9,13 @@ class TextView {
     const textTable = $("#text-table");
     for (let line = 0; line < actualLineLen; line++) {
       const tr = document.createElement("tr");
-      tr.setAttribute("data-tr-idx", line + 1);
+      tr.setAttribute("data-tr-idx", line);
       textTable.append(tr);
       for (let char = 0; char < charPerLine; char++) {
         const td = document.createElement("td");
-        td.setAttribute("data-td-idx", char + 1);
+        td.setAttribute("data-td-idx", char);
         td.innerText = text[line * charPerLine + char];
-        td.addEventListener("click", this.addTdClass.bind(this));
+        td.addEventListener("click", this.showSelectedChar.bind(this));
         tr.append(td);
       }
     }
@@ -43,17 +43,22 @@ class TextView {
     } else {
       e.target.classList.add("select");
     }
+  }
+
+  static showSelectedChar(e) {
+    this.addTdClass(e);
     this.showCurrentTdPos(e.target);
+    ImageView.drawRectOnChar(e.target);
   }
 
   // 후에 더 적절한 위치로 옮기기
   static showCurrentTdPos(td) {
     const tr = td.parentElement;
-    const lineIdx = tr.dataset.trIdx;
-    const charIdx = td.dataset.tdIdx;
+    const lineIdx = parseInt(tr.dataset.trIdx);
+    const charIdx = parseInt(td.dataset.tdIdx);
 
     const currentPos = $("#current-pos");
-    currentPos.innerText = `1, ${lineIdx}, ${charIdx}`;
+    currentPos.innerText = `1, ${lineIdx + 1}, ${charIdx + 1}`;
   }
 
   static moveTdPos(key) {
@@ -80,7 +85,6 @@ class TextView {
 
     if (targetTd) {
       targetTd.dispatchEvent(new Event("click"));
-      ImageView.drawRectOnChar(targetTd);
     }
 
     function moveDown() {
