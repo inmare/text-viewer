@@ -48,4 +48,23 @@ class DataView {
       return dateString;
     }
   }
+
+  static updatePageView(imageInfo) {
+    this.clearPageView();
+    const pageView = $("#page-view");
+    for (let i = 0; i < imageInfo.length; i++) {
+      const pageNum = i + 1;
+      const div = document.createElement("div");
+      div.innerText = pageNum;
+      div.classList.add("page");
+      div.setAttribute("data-page", i);
+      div.addEventListener("click", Database.importPage.bind(Database));
+      pageView.append(div);
+    }
+  }
+
+  static clearPageView() {
+    const pageView = $("#page-view");
+    pageView.innerHTML = "";
+  }
 }
