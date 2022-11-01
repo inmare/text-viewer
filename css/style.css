@@ -4,14 +4,10 @@
 @import url("./image-view.css");
 @import url("./header.css");
 @import url("./control.css");
+@import url("./database-info.css");
+@import url("./char-view.css");
 
 :root {
-  /*
-  Suffix 설명
-  -w: width
-  -h: height
-  */
-  /* 임의로 정한 길이. 추후에 글자 길이에 따라 수정하기 */
   --char-view-w: 140px;
   --color-blue: rgb(58, 150, 255);
   --color-dark-blue: rgb(26, 133, 255);
@@ -21,6 +17,9 @@
   --color-light-gray: rgb(230, 230, 230);
   --color-gray: rgb(200, 200, 200);
   --color-white: rgb(255, 255, 255);
+  --font-monospace: Consolas;
+  /* 맑은 고딕 폰트를 사용하고 싶은 경우
+  위의 줄에서 Consolas를 MalgunGothic으로 바꾸기 */
 }
 
 * {

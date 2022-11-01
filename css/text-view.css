@@ -1,7 +1,5 @@
 #text-view * {
-  font-family: Consolas;
-  /* 맑은 고딕 폰트를 사용하고 싶은 경우
-  위의 줄에서 Consolas를 MalgunGothic으로 바꾸기 */
+  font-family: var(--font-monospace);
   font-size: 18px;
   line-height: 0.9;
 }

@@ -44,9 +44,7 @@
 }
 
 #char-table td {
-  font-family: Consolas;
-  /* 맑은 고딕 폰트를 사용하고 싶은 경우
-  위의 줄에서 Consolas를 MalgunGothic으로 바꾸기 */
+  font-family: var(--font-monospace);
   border: 1px solid var(--color-black);
   padding: 3px 7px;
   min-width: 30px;
@@ -121,5 +119,3 @@
 .info-view p {
   text-align: left;
 }
-
-

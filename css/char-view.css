@@ -13,5 +13,5 @@
 }
 
 .low-char span[data-info="char"] {
-  font-family: Consolas;
+  font-family: var(--font-monospace);
 }
