@@ -59,6 +59,29 @@ class Database {
               },
             ],
           },
+          {
+            data: imgData,
+            page: 2,
+            size: [200, 200], // [x, y]
+            text: textData,
+            cropPoints: {
+              horizontal: [
+                0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140,
+                150, 160, 170, 180, 190, 200,
+              ],
+              vertical: [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200],
+            },
+            lowPercentChar: [
+              {
+                char: "r",
+                index: 2,
+              },
+              {
+                char: "e",
+                index: 3,
+              },
+            ],
+          },
         ],
       };
 
@@ -94,22 +117,20 @@ class Database {
 
       let request;
 
-      if (e.target?.id == "load-database") {
+      const mode = e.target.dataset.button;
+
+      if (mode == "load-all") {
         request = projects.getAll();
-      } else {
+        request.onsuccess = function () {
+          DataView.updateDataView(request.result);
+        };
+      } else if (mode == "import") {
         const id = e.target.closest(".db-div").dataset.projectId;
         request = projects.get(id);
+        request.onsuccess = function () {
+          Database.importData(request.result);
+        };
       }
-
-      request.onsuccess = function () {
-        const result = request.result;
-
-        if (e.target?.id == "load-database") {
-          DataView.updateDataView(result);
-        } else {
-          Database.importData(result);
-        }
-      };
 
       request.onerror = function () {
         console.log("Error", request.error);
@@ -118,11 +139,27 @@ class Database {
   }
 
   static importData(data) {
-    this.currentProject = data;
-    const charPerLine = data.charPerLine;
-    const info = data.info[0];
+    if (this.currentProject && this.currentProject.id == data.id) {
+      return alert("이미 로드된 프로젝트입니다.");
+    } else {
+      this.currentProject = data;
+    }
 
-    TextView.updateTextView(info, charPerLine);
-    ImageView.updateImageView(info);
+    const charPerLine = data.charPerLine;
+    const imageInfo = data.info;
+    const firstPage = data.info[0];
+
+    TextView.updateTextView(firstPage, charPerLine);
+    ImageView.updateImageView(firstPage);
+    DataView.updatePageView(imageInfo);
+  }
+
+  static importPage(e) {
+    const pageIdx = e.target.dataset.page;
+    const page = this.currentProject.info[pageIdx];
+    const charPerLine = this.currentProject.charPerLine;
+
+    TextView.updateTextView(page, charPerLine);
+    ImageView.updateImageView(page);
   }
 }
