@@ -3,9 +3,10 @@ class TextView {
     window.addEventListener("click", this.removeTdClass);
   }
 
-  static updateTextView(info, charPerLine) {
-    const actualLineLen = info.text.length / charPerLine;
-    const text = info.text;
+  static updateTextView(pageInfo, charPerLine) {
+    this.clearTextView();
+    const actualLineLen = pageInfo.text.length / charPerLine;
+    const text = pageInfo.text;
     const textTable = $("#text-table");
     for (let line = 0; line < actualLineLen; line++) {
       const tr = document.createElement("tr");
@@ -19,6 +20,11 @@ class TextView {
         tr.append(td);
       }
     }
+  }
+
+  static clearTextView() {
+    const textTable = $("#text-table");
+    textTable.innerHTML = "";
   }
 
   static removeTdClass(e) {
@@ -58,7 +64,7 @@ class TextView {
     const charIdx = parseInt(td.dataset.tdIdx);
 
     const currentPos = $("#current-pos");
-    currentPos.innerText = `1, ${lineIdx + 1}, ${charIdx + 1}`;
+    currentPos.innerText = `${lineIdx + 1}, ${charIdx + 1}`;
   }
 
   static moveTdPos(key) {
@@ -134,16 +140,19 @@ class TextView {
     }
   }
 
+  // 단축키로 작동하든 클릭으로 작동하든 동일한 작동을 보장하도록 코드를 작성했지만
+  // 최적의 방법이 발견된다면 언제든지 수정 될 수 있음
   static changeView() {
-    const changeViewBtn = $("#change-view");
-    const logo = changeViewBtn.querySelector("i");
-    logo.classList.toggle("header-btn-deactivate");
+    const btn = $("#change-view");
+    Header.toggleDeactiveCls(btn);
+    Header.changeViewBtnData(btn);
 
-    Header.changeViewBtnData(changeViewBtn);
-
-    const mode = changeViewBtn.dataset.viewMode;
+    const mode = btn.dataset.viewMode;
     const charList = CharTable.charList;
     const textViewTd = $("#text-table td");
+    // text-table이 없을 경우 작동을 중지함
+    if (!textViewTd) return;
+
     if (mode == "from") {
       for (let td of textViewTd) {
         if (charList.from.includes(td.innerText)) {

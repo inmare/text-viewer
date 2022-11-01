@@ -1,16 +1,17 @@
 class ImageView {
   static initialize() {}
 
-  static updateImageView(info) {
+  static updateImageView(pageInfo) {
+    this.clearImageView();
     const imageCanvas = $("#image-canvas");
     const rectCanvas = $("#rect-canvas");
-    imageCanvas.width = info.size[0];
-    imageCanvas.height = info.size[1];
-    imageCanvas.style.width = info.size[0] + "px";
-    imageCanvas.style.height = info.size[1] + "px";
+    imageCanvas.width = pageInfo.size[0];
+    imageCanvas.height = pageInfo.size[1];
+    imageCanvas.style.width = pageInfo.size[0] + "px";
+    imageCanvas.style.height = pageInfo.size[1] + "px";
 
-    rectCanvas.width = info.size[0];
-    rectCanvas.height = info.size[1];
+    rectCanvas.width = pageInfo.size[0];
+    rectCanvas.height = pageInfo.size[1];
 
     const scaleFactor = 300 / 96; // 300dpi로 설정
     imageCanvas.width = Math.ceil(imageCanvas.width * scaleFactor);
@@ -19,7 +20,25 @@ class ImageView {
     const ctx = imageCanvas.getContext("2d");
     ctx.globalCompositeOperation = "luminosity";
     ctx.scale(scaleFactor, scaleFactor);
-    ctx.putImageData(info.data, 0, 0);
+    ctx.putImageData(pageInfo.data, 0, 0);
+  }
+
+  static clearImageView() {
+    const imageCanvas = $("#image-canvas");
+    const rectCanvas = $("#rect-canvas");
+    const imageCtx = imageCanvas.getContext("2d");
+    const rectCtx = rectCanvas.getContext("2d");
+
+    imageCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+    rectCtx.clearRect(0, 0, rectCanvas.width, rectCanvas.height);
+
+    imageCanvas.width = 0;
+    imageCanvas.height = 0;
+    rectCanvas.width = 0;
+    rectCanvas.height = 0;
+
+    imageCanvas.style.width = "0";
+    imageCanvas.style.height = "0";
   }
 
   static drawRectOnChar(td) {
