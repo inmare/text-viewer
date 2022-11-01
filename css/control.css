@@ -20,6 +20,11 @@
   align-items: center;
 }
 
+#char-table-wrapper {
+  max-width: 350px;
+  overflow: auto;
+}
+
 #char-table {
   text-align: center;
   border-collapse: collapse;
@@ -91,10 +96,10 @@
   background-color: var(--color-light-gray);
   border-radius: 5px;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 4fr 1fr;
   gap: 5px;
   padding: 5px;
-  min-width: 400px;
+  min-width: 350px;
 }
 
 .info {
@@ -150,4 +155,15 @@
 
 .db-div-icon > .fa-trash {
   color: rgb(185, 0, 0);
+}
+
+.page {
+  margin: 2px 3px;
+  padding: 0px 3px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease-out;
+}
+
+.page:hover {
+  background-color: rgb(170, 170, 170);
 }
