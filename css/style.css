@@ -80,17 +80,27 @@ header {
   grid-row: 3 / 4;
   display: grid;
   grid-template-columns: 1fr 1fr var(--char-view-w);
-  border-top: 1px solid var(--color-dark-gray);
+  grid-template-rows: auto 1fr;
+}
+
+#char-pos-view {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+  border-width: 1px 0px;
+  border-style: solid;
+  border-color: var(--color-dark-gray);
 }
 
 #image-view {
   grid-column: 1 / 2;
+  grid-row: 2 / 3;
   position: relative;
   overflow: auto;
 }
 
 #text-view {
   grid-column: 2 / 3;
+  grid-row: 2 / 3;
   background-color: var(--color-light-gray);
   position: relative;
   overflow: auto;
@@ -98,6 +108,7 @@ header {
 
 #char-view {
   grid-column: 3 / 4;
+  grid-row: 2 / 3;
   width: 140px;
   background-color: var(--color-gray);
 }
