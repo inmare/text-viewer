@@ -21,6 +21,7 @@
     <!-- database -->
     <script defer src="./js/database/database.js"></script>
     <!-- ui -->
+    <script defer src="./js/ui/control.js"></script>
     <script defer src="./js/ui/dataView.js"></script>
     <script defer src="./js/ui/charTable.js"></script>
     <script defer src="./js/ui/textView.js"></script>
@@ -38,18 +39,22 @@
       <header>
         <h1>Text viewer</h1>
         <nav>
-          <div id="toggle-char-list" class="nav-item" title="글자 목록 토글">
+          <div id="toggle-char-setting" class="nav-item" title="글자 목록 토글">
             <i class="fa-solid fa-font"></i>
           </div>
           <div
-            id="toggle-database"
+            id="toggle-load-setting"
             class="nav-item"
-            title="데이터베이스 정보 토글"
+            title="데이터 정보 토글"
           >
             <i class="fa-solid fa-database"></i>
           </div>
-          <div id="change-view" class="nav-item" title="글자 모드 변경 (Alt+v)">
-            <i class="fa-solid fa-eye header-btn-deactivate"></i>
+          <div
+            id="change-view"
+            class="nav-item header-btn-deactive"
+            title="글자 모드 변경 (Alt+v)"
+          >
+            <i class="fa-solid fa-eye"></i>
           </div>
           <div id="zoom-image" class="nav-item" title="사진 확대">
             <i class="fa-solid fa-magnifying-glass-plus"></i>
@@ -70,11 +75,6 @@
       </header>
       <section id="control">
         <div id="char-setting">
-          <p>
-            현재 위치:
-            <span id="current-pos" style="color: rgb(230, 0, 0)"></span>
-            (페이지, 줄, 글자)
-          </p>
           <h2>글자 목록</h2>
           <div id="char-list">
             <div id="char-config">
@@ -96,19 +96,21 @@
                 <button id="char-init" class="control-btn">초기화</button>
               </div>
             </div>
-            <table id="char-table">
-              <tbody>
-                <tr id="from-char">
-                  <td>From</td>
-                </tr>
-                <tr id="to-char">
-                  <td>To</td>
-                </tr>
-                <tr id="del-char">
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+            <div id="char-table-wrapper">
+              <table id="char-table">
+                <tbody>
+                  <tr id="from-char">
+                    <td>From</td>
+                  </tr>
+                  <tr id="to-char">
+                    <td>To</td>
+                  </tr>
+                  <tr id="del-char">
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div id="load-setting">
@@ -118,7 +120,11 @@
               <label for="load-file">파일에서 로드</label>
               <input type="file" name="load-file" id="load-file" />
             </div>
-            <button id="load-database" class="control-btn">
+            <button
+              id="load-database"
+              class="control-btn"
+              data-button="load-all"
+            >
               데이터베이스에서 로드
             </button>
           </div>
@@ -128,13 +134,20 @@
               <div id="database-view" class="info-view"></div>
             </div>
             <div id="page-info" class="info">
-              <p>페이지 정보</p>
+              <p>페이지</p>
               <div id="page-view" class="info-view"></div>
             </div>
           </div>
         </div>
       </section>
       <section id="view">
+        <div id="char-pos-view">
+          <p>
+            프로젝트: <span></span>, 페이지: <span></span>, 위치:
+            <span id="current-pos" style="color: rgb(230, 0, 0)"></span>
+            (줄, 글자)
+          </p>
+        </div>
         <div id="image-view">
           <canvas id="image-canvas"></canvas>
           <canvas id="rect-canvas"></canvas>
