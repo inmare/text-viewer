@@ -33,8 +33,7 @@ class TextView {
       if (selectedTd) {
         selectedTd.classList.remove("select");
 
-        const currentPos = $("#current-pos");
-        currentPos.innerText = "";
+        PositionView.showCurrentTdPos();
       }
     }
   }
@@ -53,18 +52,8 @@ class TextView {
 
   static showSelectedChar(e) {
     this.addTdClass(e);
-    this.showCurrentTdPos(e.target);
+    PositionView.showCurrentTdPos(e.target);
     ImageView.drawRectOnChar(e.target);
-  }
-
-  // 후에 더 적절한 위치로 옮기기
-  static showCurrentTdPos(td) {
-    const tr = td.parentElement;
-    const lineIdx = parseInt(tr.dataset.trIdx);
-    const charIdx = parseInt(td.dataset.tdIdx);
-
-    const currentPos = $("#current-pos");
-    currentPos.innerText = `${lineIdx + 1}, ${charIdx + 1}`;
   }
 
   static moveTdPos(key) {
