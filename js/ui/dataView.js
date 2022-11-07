@@ -21,11 +21,11 @@ class DataView {
       lastSaved.innerText = formatTime(data.lastSaved);
 
       const importBtn = dbDiv.querySelector("i[data-button='import']");
-      const downloadBtn = dbDiv.querySelector("i[data-button='download']");
+      // const downloadBtn = dbDiv.querySelector("i[data-button='download']");
       const deleteBtn = dbDiv.querySelector("i[data-button='delete']");
 
       importBtn.addEventListener("click", Database.callDatabase);
-      downloadBtn.addEventListener("click", Database.downloadData);
+      // downloadBtn.addEventListener("click", Database.downloadData);
       deleteBtn.addEventListener("click", Database.deleteData);
 
       databaseView.append(dbDiv);
@@ -35,9 +35,9 @@ class DataView {
       const dateString =
         String(date.getYear()).slice(-2) +
         "-" +
-        String(date.getMonth()).padStart(2, "0") +
+        String(date.getMonth() + 1).padStart(2, "0") +
         "-" +
-        String(date.getDay()).padStart(2, "0") +
+        String(date.getDate()).padStart(2, "0") +
         " " +
         String(date.getHours()).padStart(2, "0") +
         ":" +
