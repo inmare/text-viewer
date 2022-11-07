@@ -82,7 +82,7 @@ header {
   grid-template-rows: auto 1fr;
 }
 
-#char-pos-view {
+#current-pos-view {
   grid-column: 1 / 4;
   grid-row: 1 / 2;
   border-width: 1px 0px;
