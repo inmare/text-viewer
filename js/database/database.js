@@ -152,6 +152,8 @@ class Database {
     TextView.updateTextView(firstPage, charPerLine);
     ImageView.updateImageView(firstPage);
     DataView.updatePageView(imageInfo);
+    PositionView.showCurrentProj(data.name);
+    PositionView.showCurrentPage(0);
   }
 
   static importPage(e) {
@@ -161,5 +163,7 @@ class Database {
 
     TextView.updateTextView(page, charPerLine);
     ImageView.updateImageView(page);
+    PositionView.showCurrentPage(pageIdx);
+    PositionView.showCurrentTdPos();
   }
 }
