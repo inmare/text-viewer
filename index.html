@@ -22,6 +22,7 @@
     <script defer src="./js/database/database.js"></script>
     <!-- ui -->
     <script defer src="./js/ui/control.js"></script>
+    <script defer src="./js/ui/positionView.js"></script>
     <script defer src="./js/ui/dataView.js"></script>
     <script defer src="./js/ui/charTable.js"></script>
     <script defer src="./js/ui/textView.js"></script>
@@ -141,10 +142,12 @@
         </div>
       </section>
       <section id="view">
-        <div id="char-pos-view">
+        <div id="current-pos-view">
           <p>
-            프로젝트: <span></span>, 페이지: <span></span>, 위치:
-            <span id="current-pos" style="color: rgb(230, 0, 0)"></span>
+            프로젝트: <span data-current="project"></span>, 페이지:
+            <span data-current="page" style="color: rgb(230, 0, 0)"></span>,
+            위치:
+            <span data-current="pos" style="color: rgb(230, 0, 0)"></span>
             (줄, 글자)
           </p>
         </div>
@@ -155,7 +158,12 @@
         <div id="text-view">
           <table id="text-table"></table>
         </div>
-        <div id="char-view"></div>
+        <div id="char-view">
+          <div class="low-char">
+            <p>글자: <span data-info="char">A</span></p>
+            <p>위치: <span data-info="pos"></span></p>
+          </div>
+        </div>
       </section>
     </div>
     <template id="database-template">
@@ -171,11 +179,11 @@
             class="fa-solid fa-cloud-arrow-up"
             title="불러오기"
           ></i>
-          <i
+          <!-- <i
             data-button="download"
             class="fa-solid fa-download"
             title="다운로드"
-          ></i>
+          ></i> -->
           <i data-button="delete" class="fa-solid fa-trash" title="삭제"></i>
         </div>
       </div>
