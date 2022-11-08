@@ -6,6 +6,7 @@
 @import url("./control.css");
 @import url("./database-info.css");
 @import url("./char-view.css");
+@import url("./position-view.css");
 
 :root {
   --char-view-w: 140px;
