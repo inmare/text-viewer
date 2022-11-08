@@ -3,11 +3,12 @@ class TextView {
     window.addEventListener("click", this.removeTdClass);
   }
 
-  static updateTextView(pageInfo, charPerLine) {
+  static updateTextView(pageInfo, pageIdx, charPerLine) {
     this.clearTextView();
     const actualLineLen = pageInfo.text.length / charPerLine;
     const text = pageInfo.text;
     const textTable = $("#text-table");
+    textTable.setAttribute("data-page-idx", pageIdx);
     for (let line = 0; line < actualLineLen; line++) {
       const tr = document.createElement("tr");
       tr.setAttribute("data-tr-idx", line);
@@ -52,8 +53,11 @@ class TextView {
 
   static showSelectedChar(e) {
     this.addTdClass(e);
-    PositionView.showCurrentTdPos(e.target);
-    ImageView.drawRectOnChar(e.target);
+    const tdIndex = this.getTdIndex(e.target);
+    PositionView.showCurrentTdPos(tdIndex);
+    this.scrollToTd(e.target);
+    ImageView.drawRectOnChar(tdIndex);
+    ImageView.scrollToRect(tdIndex);
   }
 
   static moveTdPos(key) {
@@ -127,6 +131,32 @@ class TextView {
         return null;
       }
     }
+  }
+
+  static getTdIndex(td) {
+    const tr = td.parentElement;
+    const lineIdx = parseInt(tr.dataset.trIdx);
+    const charIdx = parseInt(td.dataset.tdIdx);
+    const textTable = $("#text-table");
+    const pageIdx = parseInt(textTable.dataset.pageIdx);
+    const index = {
+      char: charIdx,
+      line: lineIdx,
+      page: pageIdx,
+    };
+
+    return index;
+  }
+
+  static scrollToTd(td) {
+    const tdX = td.offsetLeft;
+    const tdY = td.offsetTop;
+
+    const textView = $("#text-view");
+    const offsetWidth = Math.round(textView.clientWidth / 2);
+    const offsetHeight = Math.round(textView.offsetHeight / 2);
+    textView.scrollLeft = tdX - offsetWidth;
+    textView.scrollTop = tdY - offsetHeight;
   }
 
   // 단축키로 작동하든 클릭으로 작동하든 동일한 작동을 보장하도록 코드를 작성했지만

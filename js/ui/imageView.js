@@ -41,14 +41,8 @@ class ImageView {
     imageCanvas.style.height = "0";
   }
 
-  static drawRectOnChar(td) {
-    const tr = td.parentElement;
-    const lineIdx = parseInt(tr.dataset.trIdx);
-    const charIdx = parseInt(td.dataset.tdIdx);
-    // 나중에 페이지 위치도 알 수 있게 추가하기
-    const pageIdx = 1;
-
-    const cropPoints = Database.currentProject.info[0].cropPoints;
+  static drawRectOnChar(index) {
+    const cropPoints = Database.currentProject.info[index.page].cropPoints;
     const cropPointH = cropPoints.horizontal;
     const cropPointV = cropPoints.vertical;
 
@@ -60,10 +54,24 @@ class ImageView {
     ctx.strokeStyle = "#ff0000";
     ctx.strokeWidth = 2;
 
-    const x = cropPointH[charIdx];
-    const y = cropPointV[lineIdx];
-    const w = cropPointH[charIdx + 1] - cropPointH[charIdx];
-    const h = cropPointV[lineIdx + 1] - cropPointV[lineIdx];
+    const x = cropPointH[index.char];
+    const y = cropPointV[index.line];
+    const w = cropPointH[index.char + 1] - cropPointH[index.char];
+    const h = cropPointV[index.line + 1] - cropPointV[index.line];
     ctx.strokeRect(x, y, w, h);
+  }
+
+  static scrollToRect(index) {
+    const cropPoints = Database.currentProject.info[index.page].cropPoints;
+    const cropPointH = cropPoints.horizontal;
+    const cropPointV = cropPoints.vertical;
+
+    const x = cropPointH[index.char];
+    const y = cropPointV[index.line];
+    const imageView = $("#image-view");
+    const offsetWidth = Math.round(imageView.clientWidth / 2);
+    const offsetHeight = Math.round(imageView.offsetHeight / 2);
+    imageView.scrollLeft = x - offsetWidth;
+    imageView.scrollTop = y - offsetHeight;
   }
 }

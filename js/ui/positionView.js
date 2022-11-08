@@ -9,18 +9,14 @@ class PositionView {
     currentProject.innerText = Number(pageIdx) + 1;
   }
 
-  static showCurrentTdPos(td) {
+  static showCurrentTdPos(index) {
     const currentPos = $("span[data-current='pos']");
 
-    if (!td) {
+    if (!index) {
       currentPos.innerText = "";
       return;
     }
 
-    const tr = td.parentElement;
-    const lineIdx = parseInt(tr.dataset.trIdx);
-    const charIdx = parseInt(td.dataset.tdIdx);
-
-    currentPos.innerText = `${lineIdx + 1}, ${charIdx + 1}`;
+    currentPos.innerText = `${index.line + 1}, ${index.char + 1}`;
   }
 }
