@@ -38,7 +38,6 @@ class Database {
         info: [
           {
             data: imgData,
-            page: 1,
             size: [200, 200], // [x, y]
             text: textData,
             cropPoints: {
@@ -61,7 +60,6 @@ class Database {
           },
           {
             data: imgData,
-            page: 2,
             size: [200, 200], // [x, y]
             text: textData,
             cropPoints: {
@@ -147,13 +145,14 @@ class Database {
 
     const charPerLine = data.charPerLine;
     const imageInfo = data.info;
-    const firstPage = data.info[0];
+    const firstPageIdx = 0;
+    const firstPage = data.info[firstPageIdx];
 
     TextView.updateTextView(firstPage, charPerLine);
     ImageView.updateImageView(firstPage);
     DataView.updatePageView(imageInfo);
     PositionView.showCurrentProj(data.name);
-    PositionView.showCurrentPage(0);
+    PositionView.showCurrentPage(firstPageIdx);
   }
 
   static importPage(e) {
@@ -161,7 +160,7 @@ class Database {
     const page = this.currentProject.info[pageIdx];
     const charPerLine = this.currentProject.charPerLine;
 
-    TextView.updateTextView(page, charPerLine);
+    TextView.updateTextView(page, pageIdx, charPerLine);
     ImageView.updateImageView(page);
     PositionView.showCurrentPage(pageIdx);
     PositionView.showCurrentTdPos();
