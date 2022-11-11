@@ -172,20 +172,26 @@ class TextView {
     // text-table이 없을 경우 작동을 중지함
     if (!textViewTd) return;
 
-    if (mode == "from") {
-      for (let td of textViewTd) {
-        if (charList.to.includes(td.innerText)) {
-          const idx = charList.to.indexOf(td.innerText);
-          td.innerText = charList.from[idx];
+    switch (mode) {
+      case "from":
+        for (let td of textViewTd) {
+          if (charList.to.includes(td.innerText)) {
+            const idx = charList.to.indexOf(td.innerText);
+            if (charList.from[idx] == "\\n" || charList.from[idx] == "\\t") {
+              continue;
+            }
+            td.innerText = charList.from[idx];
+          }
         }
-      }
-    } else if (mode == "to") {
-      for (let td of textViewTd) {
-        if (charList.from.includes(td.innerText)) {
-          const idx = charList.from.indexOf(td.innerText);
-          td.innerText = charList.to[idx];
+        break;
+      case "to":
+        for (let td of textViewTd) {
+          if (charList.from.includes(td.innerText)) {
+            const idx = charList.from.indexOf(td.innerText);
+            td.innerText = charList.to[idx];
+          }
         }
-      }
+        break;
     }
   }
 
