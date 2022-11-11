@@ -33,7 +33,7 @@ const TEXT_TABLE_SHORTCUT = {
     key: /^([\u0020-\u007e]|Enter|Tab)$/,
     altKey: false,
     ctrlKey: false,
-    shiftKey: false,
+    shiftKey: null, // 눌려있든 안 눌려 있든 상관없음
     callback: TextView.changeTdText,
   },
 };
@@ -51,7 +51,7 @@ const SHORTCUT = {
     altKey: true,
     ctrlKey: false,
     shiftKey: false,
-    callback: null,
+    callback: TextView.changeView,
   },
 };
 
@@ -66,7 +66,7 @@ class Shortcut {
       for (let [_, value] of Object.entries(TEXT_TABLE_SHORTCUT)) {
         const isSubKeyMatch = checkSubKeyMatch(value);
 
-        if (value.key == e.key && isSubKeyMatch) {
+        if (e.key.match(value.key) && isSubKeyMatch) {
           // do something about text table
           e.preventDefault();
           value.callback(e.key);
@@ -95,10 +95,22 @@ class Shortcut {
     }
 
     function checkSubKeyMatch(shortcut) {
-      const isSubKeyMatch =
-        shortcut.altKey == e.altKey &&
-        shortcut.ctrlKey == e.ctrlKey &&
-        shortcut.shiftKey == e.shiftKey;
+      let altKey = true;
+      if (shortcut.altKey != null) {
+        altKey = shortcut.altKey == e.altKey;
+      }
+
+      let ctrlKey = true;
+      if (shortcut.ctrlKey != null) {
+        ctrlKey = shortcut.ctrlKey == e.ctrlKey;
+      }
+
+      let shiftKey = true;
+      if (shortcut.shiftKey != null) {
+        shiftKey = shortcut.shiftKey == e.shiftKey;
+      }
+
+      const isSubKeyMatch = altKey && ctrlKey && shiftKey;
 
       return isSubKeyMatch;
     }
