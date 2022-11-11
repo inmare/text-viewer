@@ -174,17 +174,64 @@ class TextView {
 
     if (mode == "from") {
       for (let td of textViewTd) {
+        if (charList.to.includes(td.innerText)) {
+          const idx = charList.to.indexOf(td.innerText);
+          td.innerText = charList.from[idx];
+        }
+      }
+    } else if (mode == "to") {
+      for (let td of textViewTd) {
         if (charList.from.includes(td.innerText)) {
           const idx = charList.from.indexOf(td.innerText);
           td.innerText = charList.to[idx];
         }
       }
-    } else if (mode == "to") {
-      for (let td of textViewTd) {
-        if (charList.to.includes(td.innerText)) {
-          const idx = charList.to.indexOf(td.innerText);
-          td.innerText = charList.from[idx];
-        }
+    }
+  }
+
+  static changeTdText(key) {
+    const selectedTd = $(".select");
+    if (selectedTd) {
+      let text;
+
+      switch (key) {
+        case "Enter":
+          if (CharTable.charList.from.includes("\\n")) {
+            const idx = CharTable.charList.from.indexOf("\\n");
+            const toChar = CharTable.charList.to[idx];
+            text = toChar;
+          } else {
+            text = null;
+          }
+          break;
+        case "Tab":
+          if (CharTable.charList.from.includes("\\t")) {
+            const idx = CharTable.charList.from.indexOf("\\t");
+            const toChar = CharTable.charList.to[idx];
+            text = toChar;
+          } else {
+            text = null;
+          }
+          break;
+        default:
+          const btn = $("#change-view");
+          const mode = btn.dataset.viewMode;
+          if (mode == "from") {
+            text = key;
+          } else if (mode == "to") {
+            if (CharTable.charList.from.includes(key)) {
+              const idx = CharTable.charList.from.indexOf(key);
+              const toChar = CharTable.charList.to[idx];
+              text = toChar;
+            } else {
+              text = key;
+            }
+          }
+          break;
+      }
+
+      if (text) {
+        selectedTd.innerText = text;
       }
     }
   }
