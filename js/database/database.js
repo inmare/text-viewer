@@ -194,24 +194,32 @@ class Database {
     DataView.updatePageView(imageInfo);
     PositionView.showCurrentProj(data.name);
     PositionView.showCurrentPage(firstPageIdx);
+    CharView.updateCharView(firstPage);
   }
 
   static async deleteProejct(e) {
-    const id = e.target.closest(".db-div").dataset.projectId;
+    const doDelete = confirm("정말로 프로젝트를 삭제하시겠습니까?");
 
-    Database.currentProject = null;
+    if (doDelete) {
+      const id = e.target.closest(".db-div").dataset.projectId;
 
-    TextView.clearTextView();
-    ImageView.clearImageView();
-    DataView.clearPageView();
-    PositionView.showCurrentProj();
-    PositionView.showCurrentPage();
-    PositionView.showCurrentTdPos();
+      if (Database.currentProject && Database.currentProject.id == id) {
+        Database.currentProject = null;
 
-    const dbDiv = e.target.closest(".db-div");
-    dbDiv.remove();
+        TextView.clearTextView();
+        ImageView.clearImageView();
+        DataView.clearPageView();
+        CharView.clearCharView();
+        PositionView.showCurrentProj();
+        PositionView.showCurrentPage();
+        PositionView.showCurrentTdPos();
+      }
 
-    await Database.deleteProjectFromId(id);
+      const dbDiv = e.target.closest(".db-div");
+      dbDiv.remove();
+
+      await Database.deleteProjectFromId(id);
+    }
   }
 
   static importPage(e) {
@@ -223,5 +231,6 @@ class Database {
     ImageView.updateImageView(page);
     PositionView.showCurrentPage(pageIdx);
     PositionView.showCurrentTdPos();
+    CharView.updateCharView(page);
   }
 }
