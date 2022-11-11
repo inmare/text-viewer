@@ -1,10 +1,11 @@
 class DataView {
   static initialize() {
     const loadDatabaseBtn = $("#load-database");
-    loadDatabaseBtn.addEventListener("click", Database.callDatabase);
+    loadDatabaseBtn.addEventListener("click", DataView.updateDataView);
   }
 
-  static updateDataView(result) {
+  static async updateDataView() {
+    const result = await Database.getAllProjects();
     const databaseView = $("#database-view");
     databaseView.innerHTML = "";
     for (let data of result) {
@@ -24,9 +25,9 @@ class DataView {
       // const downloadBtn = dbDiv.querySelector("i[data-button='download']");
       const deleteBtn = dbDiv.querySelector("i[data-button='delete']");
 
-      importBtn.addEventListener("click", Database.callDatabase);
+      importBtn.addEventListener("click", Database.importProejct);
       // downloadBtn.addEventListener("click", Database.downloadData);
-      deleteBtn.addEventListener("click", Database.deleteData);
+      deleteBtn.addEventListener("click", Database.deleteProejct);
 
       databaseView.append(dbDiv);
     }

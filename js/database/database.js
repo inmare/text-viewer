@@ -96,51 +96,92 @@ class Database {
     };
   }
 
-  static callDatabase(e) {
-    const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+  static getAllProjects() {
+    return new Promise((resolve, reject) => {
+      const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
-    dbOpenRequest.onerror = function () {
-      console.error("Error", dbOpenRequest.error);
-    };
-
-    dbOpenRequest.onsuccess = function () {
-      // 임시 데이터 추가하기
-      console.log("데이터 베이스 불러오기 성공");
-      const db = dbOpenRequest.result;
-      const transaction = db.transaction(OBJECT_STORE_NAME, "readonly");
-      const projects = transaction.objectStore(OBJECT_STORE_NAME);
-
-      // 프로젝트의 갯수가 적을 거라고 가정하고 getAll사용
-      // 나중에는 cursor를 사용하는 것도 고려해보기
-
-      let request;
-
-      const mode = e.target.dataset.button;
-
-      if (mode == "load-all") {
-        request = projects.getAll();
-        request.onsuccess = function () {
-          DataView.updateDataView(request.result);
-        };
-      } else if (mode == "import") {
-        const id = e.target.closest(".db-div").dataset.projectId;
-        request = projects.get(id);
-        request.onsuccess = function () {
-          Database.importData(request.result);
-        };
-      }
-
-      request.onerror = function () {
-        console.log("Error", request.error);
+      dbOpenRequest.onerror = function () {
+        console.error("Error", dbOpenRequest.error);
       };
-    };
+
+      dbOpenRequest.onsuccess = function () {
+        // 임시 데이터 추가하기
+        console.log("데이터 베이스 불러오기 성공");
+        const db = dbOpenRequest.result;
+        const transaction = db.transaction(OBJECT_STORE_NAME, "readonly");
+        const projects = transaction.objectStore(OBJECT_STORE_NAME);
+
+        // 프로젝트의 갯수가 적을 거라고 가정하고 getAll사용
+        // 나중에는 cursor를 사용하는 것도 고려해보기
+        const request = projects.getAll();
+
+        request.onsuccess = function () {
+          resolve(request.result);
+        };
+
+        request.onerror = function () {
+          console.log("Error", request.error);
+        };
+      };
+    });
   }
 
-  static importData(data) {
-    if (this.currentProject && this.currentProject.id == data.id) {
+  static getProjectFromId(id) {
+    return new Promise((resolve, reject) => {
+      const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+
+      dbOpenRequest.onerror = function () {
+        console.error("Error", dbOpenRequest.error);
+      };
+
+      dbOpenRequest.onsuccess = function () {
+        // 임시 데이터 추가하기
+        console.log("데이터 베이스 불러오기 성공");
+        const db = dbOpenRequest.result;
+        const transaction = db.transaction(OBJECT_STORE_NAME, "readonly");
+        const projects = transaction.objectStore(OBJECT_STORE_NAME);
+
+        const request = projects.get(id);
+
+        request.onsuccess = function () {
+          resolve(request.result);
+        };
+
+        request.onerror = function () {
+          console.log("Error", request.error);
+        };
+      };
+    });
+  }
+
+  static deleteProjectFromId(id) {
+    return new Promise(() => {
+      const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+
+      dbOpenRequest.onerror = function () {
+        console.error("Error", dbOpenRequest.error);
+      };
+
+      dbOpenRequest.onsuccess = function () {
+        // 임시 데이터 추가하기
+        console.log("데이터 베이스 불러오기 성공");
+        const db = dbOpenRequest.result;
+        const transaction = db.transaction(OBJECT_STORE_NAME, "readwrite");
+        const projects = transaction.objectStore(OBJECT_STORE_NAME);
+
+        projects.delete(id);
+      };
+    });
+  }
+
+  static async importProejct(e) {
+    const id = e.target.closest(".db-div").dataset.projectId;
+    const data = await Database.getProjectFromId(id);
+
+    if (Database.currentProject && Database.currentProject.id == data.id) {
       return alert("이미 로드된 프로젝트입니다.");
     } else {
-      this.currentProject = data;
+      Database.currentProject = data;
     }
 
     const charPerLine = data.charPerLine;
@@ -148,11 +189,29 @@ class Database {
     const firstPageIdx = 0;
     const firstPage = data.info[firstPageIdx];
 
-    TextView.updateTextView(firstPage, charPerLine);
+    TextView.updateTextView(firstPage, firstPageIdx, charPerLine);
     ImageView.updateImageView(firstPage);
     DataView.updatePageView(imageInfo);
     PositionView.showCurrentProj(data.name);
     PositionView.showCurrentPage(firstPageIdx);
+  }
+
+  static async deleteProejct(e) {
+    const id = e.target.closest(".db-div").dataset.projectId;
+
+    Database.currentProject = null;
+
+    TextView.clearTextView();
+    ImageView.clearImageView();
+    DataView.clearPageView();
+    PositionView.showCurrentProj();
+    PositionView.showCurrentPage();
+    PositionView.showCurrentTdPos();
+
+    const dbDiv = e.target.closest(".db-div");
+    dbDiv.remove();
+
+    await Database.deleteProjectFromId(id);
   }
 
   static importPage(e) {
