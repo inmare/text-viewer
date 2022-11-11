@@ -27,6 +27,7 @@
     <script defer src="./js/ui/charTable.js"></script>
     <script defer src="./js/ui/textView.js"></script>
     <script defer src="./js/ui/imageView.js"></script>
+    <script defer src="./js/ui/charView.js"></script>
     <script defer src="./js/ui/header.js"></script>
     <!-- shortcut -->
     <!-- 콜백에 다른 함수들을 등록해야 되기 때문에 제일 마지막에 선언 -->
@@ -158,12 +159,7 @@
         <div id="text-view">
           <table id="text-table"></table>
         </div>
-        <div id="char-view">
-          <div class="low-char">
-            <p>글자: <span data-info="char">A</span></p>
-            <p>위치: <span data-info="pos"></span></p>
-          </div>
-        </div>
+        <div id="char-view"></div>
       </section>
     </div>
     <template id="database-template">
@@ -186,6 +182,12 @@
           ></i> -->
           <i data-button="delete" class="fa-solid fa-trash" title="삭제"></i>
         </div>
+      </div>
+    </template>
+    <template id="low-char-template">
+      <div class="low-char">
+        <p>글자: <span data-char-info="char"></span></p>
+        <p>위치: <span data-char-info="pos"></span></p>
       </div>
     </template>
   </body>
