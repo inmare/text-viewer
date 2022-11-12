@@ -40,6 +40,7 @@ class Database {
             data: imgData,
             size: [200, 200], // [x, y]
             text: textData,
+            changedText: null,
             cropPoints: {
               horizontal: [
                 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140,
@@ -62,6 +63,7 @@ class Database {
             data: imgData,
             size: [200, 200], // [x, y]
             text: textData,
+            changedText: null,
             cropPoints: {
               horizontal: [
                 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140,
@@ -172,65 +174,5 @@ class Database {
         projects.delete(id);
       };
     });
-  }
-
-  static async importProejct(e) {
-    const id = e.target.closest(".db-div").dataset.projectId;
-    const data = await Database.getProjectFromId(id);
-
-    if (Database.currentProject && Database.currentProject.id == data.id) {
-      return alert("이미 로드된 프로젝트입니다.");
-    } else {
-      Database.currentProject = data;
-    }
-
-    const charPerLine = data.charPerLine;
-    const imageInfo = data.info;
-    const firstPageIdx = 0;
-    const firstPage = data.info[firstPageIdx];
-
-    TextView.updateTextView(firstPage, firstPageIdx, charPerLine);
-    ImageView.updateImageView(firstPage);
-    DataView.updatePageView(imageInfo);
-    PositionView.showCurrentProj(data.name);
-    PositionView.showCurrentPage(firstPageIdx);
-    CharView.updateCharView(firstPage);
-  }
-
-  static async deleteProejct(e) {
-    const doDelete = confirm("정말로 프로젝트를 삭제하시겠습니까?");
-
-    if (doDelete) {
-      const id = e.target.closest(".db-div").dataset.projectId;
-
-      if (Database.currentProject && Database.currentProject.id == id) {
-        Database.currentProject = null;
-
-        TextView.clearTextView();
-        ImageView.clearImageView();
-        DataView.clearPageView();
-        CharView.clearCharView();
-        PositionView.showCurrentProj();
-        PositionView.showCurrentPage();
-        PositionView.showCurrentTdPos();
-      }
-
-      const dbDiv = e.target.closest(".db-div");
-      dbDiv.remove();
-
-      await Database.deleteProjectFromId(id);
-    }
-  }
-
-  static importPage(e) {
-    const pageIdx = e.target.dataset.page;
-    const page = this.currentProject.info[pageIdx];
-    const charPerLine = this.currentProject.charPerLine;
-
-    TextView.updateTextView(page, pageIdx, charPerLine);
-    ImageView.updateImageView(page);
-    PositionView.showCurrentPage(pageIdx);
-    PositionView.showCurrentTdPos();
-    CharView.updateCharView(page);
   }
 }
