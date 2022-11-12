@@ -187,7 +187,7 @@ class Database {
       // 임시 데이터 추가하기
       console.log("데이터 베이스 불러오기 성공");
       const db = dbOpenRequest.result;
-      const transaction = db.transaction(OBJECT_STORE_NAME, "readonly");
+      const transaction = db.transaction(OBJECT_STORE_NAME, "readwrite");
       const projects = transaction.objectStore(OBJECT_STORE_NAME);
 
       const request = projects.put(Database.currentProject);
