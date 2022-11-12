@@ -1,9 +1,7 @@
-"use strict";
-
 class CharTable {
   static initialize() {
     // 기본 글자 설정 불러오기
-    this.charList = charList;
+    this.charList = INIT_CHAR_LIST;
 
     // char-table을 기본 문자열로 초기화
     for (let i = 0; i < this.charList.from.length; i++) {
@@ -51,13 +49,52 @@ class CharTable {
     const fromChar = $("#from").value;
     const toChar = $("#to").value;
 
-    if (fromChar == "" || toChar == "") {
-      return alert("글자를 입력해주세요");
+    const charMatch = checkCharIsValid();
+    if (!charMatch.result) {
+      return alert(charMatch.msg);
     }
 
     this.appendCharToTable(fromChar, toChar);
     this.charList.from.push(fromChar);
     this.charList.to.push(toChar);
+    switch (fromChar) {
+      case "\\n":
+        this.charList.actual.push("\n");
+        break;
+      case "\\t":
+        this.charList.actual.push("\t");
+        break;
+      default:
+        this.charList.actual.push(fromChar);
+        break;
+    }
+
+    function checkCharIsValid() {
+      const fromRegex = /^(?:[\u0020-\u007e]|\\n|\\t)$/;
+      const toRegex = /^(?:\d|[a-f]|[A-F]){4}$/;
+
+      const fromMatch = fromChar.match(fromRegex);
+      const toMatch = toChar.match(toRegex);
+
+      if (!fromMatch) {
+        return {
+          result: false,
+          msg: "From에는 1글자의 아스키코드 혹은 \\n, \\t만 입력할 수 있습니다.",
+        };
+      }
+
+      if (!toMatch) {
+        return {
+          result: false,
+          msg: "To에는 유니코드 형태의 4자리 글자만 입력할 수 있습니다.",
+        };
+      }
+
+      return {
+        result: true,
+        msg: null,
+      };
+    }
   }
 
   static appendCharToTable(fromChar, toChar) {
