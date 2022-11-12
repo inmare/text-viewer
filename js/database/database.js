@@ -175,4 +175,31 @@ class Database {
       };
     });
   }
+
+  static savePage() {
+    const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+
+    dbOpenRequest.onerror = function () {
+      console.error("Error", dbOpenRequest.error);
+    };
+
+    dbOpenRequest.onsuccess = function () {
+      // 임시 데이터 추가하기
+      console.log("데이터 베이스 불러오기 성공");
+      const db = dbOpenRequest.result;
+      const transaction = db.transaction(OBJECT_STORE_NAME, "readonly");
+      const projects = transaction.objectStore(OBJECT_STORE_NAME);
+
+      const request = projects.put(Database.currentProject);
+
+      request.onsuccess = function () {
+        console.log("데이터 저장 성공");
+      };
+
+      request.onerror = function () {
+        console.log("Error", request.error);
+        throw request.error;
+      };
+    };
+  }
 }
