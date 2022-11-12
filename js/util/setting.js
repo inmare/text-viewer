@@ -4,7 +4,7 @@ const DATABASE_NAME = "MSM_DATABASE";
 const OBJECT_STORE_NAME = "MSM_OBJECT_STORE";
 const ID_HASH_LENGTH = 4;
 
-const charList = {
+const INIT_CHAR_LIST = {
   from: [" ", "\\n", "\\t", "0", "8", "5", "$", "`", "~", "Q", "D"],
   to: ["Γ", "»", "«", "Δ", "δ", "Σ", "§", "Я", "Ξ", "¶", "Ю"],
   // 줄바꿈과 탭문자를 위한 부분
