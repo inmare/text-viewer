@@ -3,7 +3,13 @@ class CharTable {
 
   static initialize() {
     // 기본 글자 설정 불러오기
-    this.charList = INIT_CHAR_LIST;
+    let localCharList = localStorage.getItem(CHAR_SETTING_NAME);
+    if (localCharList) {
+      localCharList = JSON.parse(localCharList);
+      this.charList = localCharList;
+    } else {
+      this.charList = INIT_CHAR_LIST;
+    }
 
     // char-table을 기본 문자열로 초기화
     this.updateCharTable();
@@ -32,17 +38,13 @@ class CharTable {
     const toTdList = $("#to-char > td");
     const delTdList = $("#del-char > td");
 
-    const fromChar = fromTdList.innerText;
-    const toChar = toTdList.innerText;
-
     fromTdList[tdIdx].remove();
     toTdList[tdIdx].remove();
     delTdList[tdIdx].remove();
 
-    const idx = this.charList.from.indexOf(fromChar);
-
-    this.charList.from.splice(idx, 1);
-    this.charList.to.splice(idx, 1);
+    this.charList.from.splice(tdIdx - 1, 1);
+    this.charList.to.splice(tdIdx - 1, 1);
+    this.charList.actual.splice(tdIdx - 1, 1);
 
     function getTdIndex(td) {
       const delTdList = $("#del-char > td");
@@ -76,6 +78,9 @@ class CharTable {
         break;
     }
     this.appendCharToTable(fromChar, toChar);
+
+    $("#from").value = "";
+    $("#to").value = "";
 
     function checkCharIsValid() {
       const fromRegex = /^(?:[\u0020-\u007e]|\\n|\\t)$/;
@@ -128,6 +133,12 @@ class CharTable {
 
   static saveCharSetting() {
     const settingString = JSON.stringify(this.charList);
-    localStorage.setItem(CHAR_SETTING_NAME, settingString);
+    try {
+      localStorage.setItem(CHAR_SETTING_NAME, settingString);
+      alert("글자 목록 저장에 성공했습니다.");
+    } catch (error) {
+      alert("글자 목록 저장에 실패했습니다.");
+      console.log(error.name + ": " + error.message);
+    }
   }
 }
