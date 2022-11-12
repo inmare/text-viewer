@@ -7,19 +7,19 @@ class ImageView {
     const rectCanvas = $("#rect-canvas");
     imageCanvas.width = pageInfo.size[0];
     imageCanvas.height = pageInfo.size[1];
-    imageCanvas.style.width = pageInfo.size[0] + "px";
-    imageCanvas.style.height = pageInfo.size[1] + "px";
+    // imageCanvas.style.width = pageInfo.size[0] + "px";
+    // imageCanvas.style.height = pageInfo.size[1] + "px";
 
     rectCanvas.width = pageInfo.size[0];
     rectCanvas.height = pageInfo.size[1];
 
-    const scaleFactor = 300 / 96; // 300dpi로 설정
-    imageCanvas.width = Math.ceil(imageCanvas.width * scaleFactor);
-    imageCanvas.height = Math.ceil(imageCanvas.height * scaleFactor);
+    // const scaleFactor = 300 / 96; // 300dpi로 설정
+    // imageCanvas.width = Math.ceil(imageCanvas.width * scaleFactor);
+    // imageCanvas.height = Math.ceil(imageCanvas.height * scaleFactor);
 
     const ctx = imageCanvas.getContext("2d");
     ctx.globalCompositeOperation = "luminosity";
-    ctx.scale(scaleFactor, scaleFactor);
+    // ctx.scale(scaleFactor, scaleFactor);
     ctx.putImageData(pageInfo.data, 0, 0);
   }
 
@@ -37,8 +37,8 @@ class ImageView {
     rectCanvas.width = 0;
     rectCanvas.height = 0;
 
-    imageCanvas.style.width = "0";
-    imageCanvas.style.height = "0";
+    // imageCanvas.style.width = "0";
+    // imageCanvas.style.height = "0";
   }
 
   static drawRectOnChar(index) {
@@ -75,7 +75,5 @@ class ImageView {
     imageView.scrollTop = y - offsetHeight;
   }
 
-  static toggleImageZoom() {
-    
-  }
+  static toggleImageZoom() {}
 }
