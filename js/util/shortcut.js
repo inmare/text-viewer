@@ -51,7 +51,7 @@ const SHORTCUT = {
     altKey: true,
     ctrlKey: false,
     shiftKey: false,
-    callback: TextView.changeView,
+    callback: Header.toggleViewMode,
   },
 };
 
