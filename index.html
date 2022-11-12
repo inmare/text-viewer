@@ -20,6 +20,8 @@
     <script defer src="./js/util/setting.js"></script>
     <!-- database -->
     <script defer src="./js/database/database.js"></script>
+    <script defer src="./js/database/changeData.js"></script>
+    <script defer src="./js/database/importData.js"></script>
     <!-- ui -->
     <script defer src="./js/ui/control.js"></script>
     <script defer src="./js/ui/positionView.js"></script>
@@ -61,16 +63,16 @@
           <div id="zoom-image" class="nav-item" title="사진 확대">
             <i class="fa-solid fa-magnifying-glass-plus"></i>
           </div>
-          <div class="nav-item" title="저장 (Ctrl+s)">
+          <div id="save-page" class="nav-item" title="저장 (Ctrl+s)">
             <i class="fa-solid fa-floppy-disk"></i>
           </div>
-          <div class="nav-item" title="현재 페이지 초기화">
+          <div id="init-page" class="nav-item" title="현재 페이지 초기화">
             <i class="fa-solid fa-clock-rotate-left"></i>
           </div>
-          <div class="nav-item" title="파일로 합치기">
+          <div id="combine-to-file" class="nav-item" title="파일로 합치기">
             <i class="fa-solid fa-file-export"></i>
           </div>
-          <div class="nav-item" title="사용법 보기">
+          <div id="show-doc" class="nav-item" title="사용법 보기">
             <i class="fa-solid fa-circle-question"></i>
           </div>
         </nav>
