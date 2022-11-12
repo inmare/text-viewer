@@ -220,7 +220,7 @@ class TextView {
           }
           break;
         default:
-          const btn = $("#change-view");
+          const btn = $("#view-mode");
           const mode = btn.dataset.viewMode;
           if (mode == "from") {
             text = key;
