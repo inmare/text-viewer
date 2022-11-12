@@ -5,8 +5,14 @@ class TextView {
 
   static updateTextView(pageInfo, pageIdx, charPerLine) {
     this.clearTextView();
-    const actualLineLen = pageInfo.text.length / charPerLine;
-    const text = pageInfo.text;
+    let text;
+    if (pageInfo.changeText) {
+      text = pageInfo.changeText;
+    } else {
+      text = pageInfo.text;
+    }
+
+    const actualLineLen = text.length / charPerLine;
     const textTable = $("#text-table");
     textTable.setAttribute("data-page-idx", pageIdx);
     for (let line = 0; line < actualLineLen; line++) {
