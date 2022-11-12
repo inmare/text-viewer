@@ -175,7 +175,8 @@ class TextView {
         for (let td of textViewTd) {
           if (charList.to.includes(td.innerText)) {
             const idx = charList.to.indexOf(td.innerText);
-            if (charList.from[idx] == "\\n" || charList.from[idx] == "\\t") {
+            const actualChar = charList.actual[idx];
+            if (actualChar == "\n" || actualChar == "\t") {
               continue;
             }
             td.innerText = charList.from[idx];
@@ -195,23 +196,24 @@ class TextView {
 
   static changeTdText(key) {
     const selectedTd = $(".select");
+    const charList = CharTable.charList;
     if (selectedTd) {
       let text;
 
       switch (key) {
         case "Enter":
-          if (CharTable.charList.from.includes("\\n")) {
-            const idx = CharTable.charList.from.indexOf("\\n");
-            const toChar = CharTable.charList.to[idx];
+          if (charList.actual.includes("\n")) {
+            const idx = charList.actual.indexOf("\n");
+            const toChar = charList.to[idx];
             text = toChar;
           } else {
             text = null;
           }
           break;
         case "Tab":
-          if (CharTable.charList.from.includes("\\t")) {
-            const idx = CharTable.charList.from.indexOf("\\t");
-            const toChar = CharTable.charList.to[idx];
+          if (charList.actual.includes("\t")) {
+            const idx = charList.acutal.indexOf("\t");
+            const toChar = charList.to[idx];
             text = toChar;
           } else {
             text = null;
@@ -223,9 +225,9 @@ class TextView {
           if (mode == "from") {
             text = key;
           } else if (mode == "to") {
-            if (CharTable.charList.from.includes(key)) {
-              const idx = CharTable.charList.from.indexOf(key);
-              const toChar = CharTable.charList.to[idx];
+            if (charList.from.includes(key)) {
+              const idx = charList.from.indexOf(key);
+              const toChar = charList.to[idx];
               text = toChar;
             } else {
               text = key;
