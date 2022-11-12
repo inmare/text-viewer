@@ -51,9 +51,10 @@ class ChangeData {
       Database.currentProject.info[pageIdx].changedText = pageText;
       Database.currentProject.lastSaved = new Date();
       Database.savePage();
-      DataView.updateLastSaved()
-    } catch {
+      DataView.updateLastSaved();
+    } catch (error) {
       alert("데이터 저장에 실패했습니다.");
+      console.log(error.name + ": " + error.message);
     }
 
     function changeLinebreakAndTab() {
