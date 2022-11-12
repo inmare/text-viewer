@@ -21,6 +21,7 @@ class TextView {
         tr.append(td);
       }
     }
+    this.changeTextTableMode();
   }
 
   static clearTextView() {
@@ -161,11 +162,8 @@ class TextView {
 
   // 단축키로 작동하든 클릭으로 작동하든 동일한 작동을 보장하도록 코드를 작성했지만
   // 최적의 방법이 발견된다면 언제든지 수정 될 수 있음
-  static changeView() {
-    const btn = $("#change-view");
-    Header.toggleDeactiveCls(btn);
-    Header.changeViewBtnData(btn);
-
+  static changeTextTableMode() {
+    const btn = $("#view-mode");
     const mode = btn.dataset.viewMode;
     const charList = CharTable.charList;
     const textViewTd = $("#text-table td");
