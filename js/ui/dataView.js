@@ -54,7 +54,7 @@ class DataView {
 
   static updateLastSaved() {
     const id = Database.currentProject.id;
-    const dbDiv = $(`div[data-id="${id}"`);
+    const dbDiv = $(`.db-div[data-project-id="${id}"`);
     const lastSavedSpan = dbDiv.querySelector("span[data-info='last-saved']");
     const lastSavedTime = Database.currentProject.lastSaved;
     lastSavedSpan.innerText = formatTime(lastSavedTime);
