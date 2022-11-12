@@ -1,14 +1,12 @@
 class CharTable {
+  static charList;
+
   static initialize() {
     // 기본 글자 설정 불러오기
     this.charList = INIT_CHAR_LIST;
 
     // char-table을 기본 문자열로 초기화
-    for (let i = 0; i < this.charList.from.length; i++) {
-      const fromChar = this.charList.from[i];
-      const toChar = this.charList.to[i];
-      this.appendCharToTable(fromChar, toChar);
-    }
+    this.updateCharTable();
 
     // 버튼들에 변수 할당
     const addCharBtn = $("#char-add");
@@ -17,6 +15,14 @@ class CharTable {
     addCharBtn.addEventListener("click", this.addChar.bind(this));
     saveCharBtn.addEventListener("click", this.saveCharSetting.bind(this));
     initCharBtn.addEventListener("click", this.initCharSetting);
+  }
+
+  static updateCharTable() {
+    for (let i = 0; i < this.charList.from.length; i++) {
+      const fromChar = this.charList.from[i];
+      const toChar = this.charList.to[i];
+      this.appendCharToTable(fromChar, toChar);
+    }
   }
 
   static deleteChar(e) {
@@ -47,14 +53,15 @@ class CharTable {
 
   static addChar() {
     const fromChar = $("#from").value;
-    const toChar = $("#to").value;
+    const toUnicodeChar = $("#to").value;
 
     const charMatch = checkCharIsValid();
     if (!charMatch.result) {
       return alert(charMatch.msg);
     }
 
-    this.appendCharToTable(fromChar, toChar);
+    const toChar = String.fromCharCode(parseInt(toUnicodeChar, 16));
+
     this.charList.from.push(fromChar);
     this.charList.to.push(toChar);
     switch (fromChar) {
@@ -68,13 +75,14 @@ class CharTable {
         this.charList.actual.push(fromChar);
         break;
     }
+    this.appendCharToTable(fromChar, toChar);
 
     function checkCharIsValid() {
       const fromRegex = /^(?:[\u0020-\u007e]|\\n|\\t)$/;
       const toRegex = /^(?:\d|[a-f]|[A-F]){4}$/;
 
       const fromMatch = fromChar.match(fromRegex);
-      const toMatch = toChar.match(toRegex);
+      const toMatch = toUnicodeChar.match(toRegex);
 
       if (!fromMatch) {
         return {
