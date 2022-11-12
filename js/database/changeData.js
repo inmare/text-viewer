@@ -6,6 +6,7 @@ class ChangeData {
       const id = e.target.closest(".db-div").dataset.projectId;
 
       if (Database.currentProject && Database.currentProject.id == id) {
+        // 만약 현재 프로젝트를 삭제 할 시 모든 데이터와 화면 초기화
         Database.currentProject = null;
 
         TextView.clearTextView();
@@ -37,27 +38,36 @@ class ChangeData {
         pageText = changeLinebreakAndTab();
         break;
       case "to":
-        for (let td of textViewTd) {
-          if (charList.from.includes(td.innerText)) {
-            const idx = charList.from.indexOf(td.innerText);
-            td.innerText = charList.to[idx];
-          }
+        for (let i = 0; i < charList.to.length; i++) {
+          const toChar = charList.to[i];
+          const actualChar = charList.actual[i];
+          pageText = pageText.replace(toChar, actualChar);
         }
         break;
     }
 
+    const pageIdx = Number(textTable.dataset.pageIdx);
+    try {
+      Database.currentProject.info[pageIdx].changedText = pageText;
+      Database.currentProject.lastSaved = new Date();
+      Database.savePage();
+      DataView.updateLastSaved()
+    } catch {
+      alert("데이터 저장에 실패했습니다.");
+    }
+
     function changeLinebreakAndTab() {
       let text = pageText;
-      if (charList.from.includes("\\n")) {
-        const linebreakIdx = charList.from.indexOf("\\n");
+      if (charList.actual.includes("\n")) {
+        const linebreakIdx = charList.actual.indexOf("\n");
         const linebreakTo = charList.to[linebreakIdx];
         text = pageText.replace(linebreakTo, "\n");
       }
 
-      if (charList.from.includes("\\t")) {
-        const linebreakIdx = charList.from.indexOf("\\t");
-        const linebreakTo = charList.to[linebreakIdx];
-        text = pageText.replace(linebreakTo, "\t");
+      if (charList.actual.includes("\t")) {
+        const tabIdx = charList.from.indexOf("\t");
+        const tabTo = charList.to[tabIdx];
+        text = pageText.replace(tabTo, "\t");
       }
 
       return text;
