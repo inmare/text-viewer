@@ -25,9 +25,9 @@ class DataView {
       // const downloadBtn = dbDiv.querySelector("i[data-button='download']");
       const deleteBtn = dbDiv.querySelector("i[data-button='delete']");
 
-      importBtn.addEventListener("click", Database.importProejct);
+      importBtn.addEventListener("click", ImportData.importProejct);
       // downloadBtn.addEventListener("click", Database.downloadData);
-      deleteBtn.addEventListener("click", Database.deleteProejct);
+      deleteBtn.addEventListener("click", ChangeData.deleteProejct);
 
       databaseView.append(dbDiv);
     }
@@ -59,7 +59,7 @@ class DataView {
       div.innerText = pageNum;
       div.classList.add("page");
       div.setAttribute("data-page", i);
-      div.addEventListener("click", Database.importPage.bind(Database));
+      div.addEventListener("click", ImportData.importPage);
       pageView.append(div);
     }
   }
