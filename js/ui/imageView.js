@@ -74,4 +74,8 @@ class ImageView {
     imageView.scrollLeft = x - offsetWidth;
     imageView.scrollTop = y - offsetHeight;
   }
+
+  static toggleImageZoom() {
+    
+  }
 }
