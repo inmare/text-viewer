@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   window.$ = $;
   Database.initialize();
   CharTable.initialize();
@@ -9,4 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   DataView.initialize();
 
   Shortcut.initialize();
+
+  await makePlaceholder();
 });
