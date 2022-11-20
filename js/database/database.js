@@ -156,7 +156,7 @@ class Database {
     };
   }
 
-  static loadImage() {
+  static loadImage(pageIdx) {
     const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
     dbOpenRequest.onerror = function () {
@@ -170,11 +170,9 @@ class Database {
       const images = transaction.objectStore(IMAGE_STORE_NAME);
       const imageIndex = images.index("IMAGE_INDEX");
 
+      const id = Database.currentProject.id;
       const request = imageIndex.get(
-        IDBKeyRange.bound(
-          ["RANDOM_PROJECT_0494", 1],
-          ["RANDOM_PROJECT_0494", 1]
-        )
+        IDBKeyRange.bound([id, pageIdx], [id, pageIdx])
       );
 
       request.onsuccess = function () {
@@ -184,12 +182,12 @@ class Database {
 
       request.onerror = function () {
         console.log("Error", request.error);
-        // throw request.error;
+        throw request.error;
       };
     };
   }
 
-  static deleteImage() {
+  static deleteProjectImage() {
     const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
     dbOpenRequest.onerror = function () {
@@ -202,11 +200,11 @@ class Database {
       const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
       const images = transaction.objectStore(IMAGE_STORE_NAME);
       const imageIndex = images.index("IMAGE_INDEX");
+
+      const id = Database.currentProject.id;
+      const pages = Database.currentProject.imageData.length;
       const imageCursor = imageIndex.openCursor(
-        IDBKeyRange.bound(
-          ["RANDOM_PROJECT_0494", 1],
-          ["RANDOM_PROJECT_0494", 4]
-        )
+        IDBKeyRange.bound([id, 1], [id, pages])
       );
 
       imageCursor.onsuccess = function () {
