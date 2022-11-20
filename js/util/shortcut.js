@@ -30,7 +30,7 @@ const TEXT_TABLE_SHORTCUT = {
     callback: TextView.moveTdPos,
   },
   putText: {
-    key: /^([\u0020-\u007e]|Enter|Tab)$/,
+    key: /^(?:[a-zA-Z0-9]|\+|=|\/)$/,
     altKey: false,
     ctrlKey: false,
     shiftKey: null, // 눌려있든 안 눌려 있든 상관없음
@@ -61,6 +61,7 @@ class Shortcut {
   }
 
   static detectShortcut(e) {
+    console.log(e.key);
     const isTextTableActive = checkTextTableActive();
     if (isTextTableActive) {
       for (let [_, value] of Object.entries(TEXT_TABLE_SHORTCUT)) {

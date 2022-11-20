@@ -71,7 +71,7 @@ class CharTable {
     $("#to").value = "";
 
     function checkCharIsValid() {
-      const fromRegex = /^(?:[a-zA-Z0-9]|\+=\/)$/;
+      const fromRegex = /^(?:[a-zA-Z0-9]|\+|=|\/)$/;
       const toRegex = /^(?:[a-f0-9]){4}$/;
 
       const fromMatch = fromChar.match(fromRegex);
