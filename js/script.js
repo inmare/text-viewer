@@ -9,6 +9,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   DataView.initialize();
 
   Shortcut.initialize();
-
-  await makePlaceholder();
 });
