@@ -6,6 +6,7 @@ class Header {
     const loadSettingBtn = $("#toggle-load-setting");
     const savePageBtn = $("#save-page");
     const initPageBtn = $("#init-page");
+    const saveFileBtn = $("#combine-to-file");
     // change-view 버튼 데이터 속성 초기화
     Header.toggleViewMode();
 
@@ -13,6 +14,7 @@ class Header {
     charSettingBtn.addEventListener("click", Control.toggleCharSetting);
     loadSettingBtn.addEventListener("click", Control.toggleLoadInfo);
     savePageBtn.addEventListener("click", ChangeData.savePage);
+    saveFileBtn.addEventListener("click", SaveFile.saveProjectToFile);
   }
 
   static toggleViewMode() {
