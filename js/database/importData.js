@@ -9,6 +9,8 @@ class ImportData {
     //   Database.currentProject = data;
     // }
 
+    Database.currentProject = data;
+
     const charPerLine = data.charPerLine;
     const imageInfo = data.imageInfo;
     const firstPageIdx = 0;
