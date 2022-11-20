@@ -44,7 +44,7 @@ const SHORTCUT = {
     altKey: false,
     ctrlKey: true,
     shiftKey: false,
-    callback: null,
+    callback: ChangeData.savePage,
   },
   changeView: {
     key: "v",
@@ -61,7 +61,6 @@ class Shortcut {
   }
 
   static detectShortcut(e) {
-    console.log(e.key);
     const isTextTableActive = checkTextTableActive();
     if (isTextTableActive) {
       for (let [_, value] of Object.entries(TEXT_TABLE_SHORTCUT)) {
