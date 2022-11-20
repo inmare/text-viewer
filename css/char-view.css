@@ -1,3 +1,8 @@
+#char-wrapper {
+  position: absolute;
+  width: 100%;
+}
+
 .low-char {
   padding: 5px;
   margin: 5px;
@@ -6,6 +11,7 @@
   transition: box-shadow 0.2s ease-out;
   user-select: none;
   cursor: pointer;
+  max-height: 100px;
 }
 
 .low-char:hover {

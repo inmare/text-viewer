@@ -18,7 +18,7 @@
   --color-light-gray: rgb(230, 230, 230);
   --color-gray: rgb(200, 200, 200);
   --color-white: rgb(255, 255, 255);
-  --font-monospace: Consolas;
+  --font-monospace: Consolas, MalgunGothic;
   /* 맑은 고딕 폰트를 사용하고 싶은 경우
   위의 줄에서 Consolas를 MalgunGothic으로 바꾸기 */
 }
@@ -109,8 +109,9 @@ header {
 #char-view {
   grid-column: 3 / 4;
   grid-row: 2 / 3;
-  width: 140px;
   background-color: var(--color-gray);
+  position: relative;
+  overflow: auto;
 }
 
 @media screen and (max-width: 700px) {
