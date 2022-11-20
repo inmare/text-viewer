@@ -1,26 +1,25 @@
 class ImageView {
   static initialize() {}
 
-  static updateImageView(pageInfo) {
+  static updateImageView(pageInfo, imageBlob) {
     this.clearImageView();
+    const imageWidth = pageInfo.size[0];
+    const imageHeight = pageInfo.size[1];
     const imageCanvas = $("#image-canvas");
     const rectCanvas = $("#rect-canvas");
-    imageCanvas.width = pageInfo.size[0];
-    imageCanvas.height = pageInfo.size[1];
-    // imageCanvas.style.width = pageInfo.size[0] + "px";
-    // imageCanvas.style.height = pageInfo.size[1] + "px";
-
-    rectCanvas.width = pageInfo.size[0];
-    rectCanvas.height = pageInfo.size[1];
-
-    // const scaleFactor = 300 / 96; // 300dpi로 설정
-    // imageCanvas.width = Math.ceil(imageCanvas.width * scaleFactor);
-    // imageCanvas.height = Math.ceil(imageCanvas.height * scaleFactor);
 
     const ctx = imageCanvas.getContext("2d");
-    ctx.globalCompositeOperation = "luminosity";
-    // ctx.scale(scaleFactor, scaleFactor);
-    ctx.putImageData(pageInfo.data, 0, 0);
+    const blobUrl = URL.createObjectURL(imageBlob);
+    const img = new Image();
+    img.src = blobUrl;
+    img.onload = function () {
+      imageCanvas.width = imageWidth;
+      imageCanvas.height = imageHeight;
+      rectCanvas.width = imageWidth;
+      rectCanvas.height = imageHeight;
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(blobUrl);
+    };
   }
 
   static clearImageView() {
@@ -42,7 +41,7 @@ class ImageView {
   }
 
   static drawRectOnChar(index) {
-    const cropPoints = Database.currentProject.info[index.page].cropPoints;
+    const cropPoints = Database.currentProject.imageInfo[index.page].cropPoints;
     const cropPointH = cropPoints.horizontal;
     const cropPointV = cropPoints.vertical;
 
@@ -62,7 +61,7 @@ class ImageView {
   }
 
   static scrollToRect(index) {
-    const cropPoints = Database.currentProject.info[index.page].cropPoints;
+    const cropPoints = Database.currentProject.imageInfo[index.page].cropPoints;
     const cropPointH = cropPoints.horizontal;
     const cropPointV = cropPoints.vertical;
 
