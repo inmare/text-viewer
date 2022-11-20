@@ -157,34 +157,36 @@ class Database {
   }
 
   static loadImage(pageIdx) {
-    const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+    return new Promise((resolve, _) => {
+      const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
-    dbOpenRequest.onerror = function () {
-      console.error("Error", dbOpenRequest.error);
-    };
-
-    dbOpenRequest.onsuccess = function () {
-      console.log("데이터 베이스 불러오기 성공");
-      const db = dbOpenRequest.result;
-      const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
-      const images = transaction.objectStore(IMAGE_STORE_NAME);
-      const imageIndex = images.index("IMAGE_INDEX");
-
-      const id = Database.currentProject.id;
-      const request = imageIndex.get(
-        IDBKeyRange.bound([id, pageIdx], [id, pageIdx])
-      );
-
-      request.onsuccess = function () {
-        console.log("데이터 저장 성공");
-        console.log(request.result);
+      dbOpenRequest.onerror = function () {
+        console.error("Error", dbOpenRequest.error);
       };
 
-      request.onerror = function () {
-        console.log("Error", request.error);
-        throw request.error;
+      dbOpenRequest.onsuccess = function () {
+        console.log("이미지 데이터 베이스 불러오기 성공");
+        const db = dbOpenRequest.result;
+        const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
+        const images = transaction.objectStore(IMAGE_STORE_NAME);
+        const imageIndex = images.index("IMAGE_INDEX");
+
+        const id = Database.currentProject.id;
+        const request = imageIndex.get(
+          IDBKeyRange.bound([id, pageIdx], [id, pageIdx])
+        );
+
+        request.onsuccess = function () {
+          console.log("이미지 불러오기 성공");
+          resolve(request.result.data);
+        };
+
+        request.onerror = function () {
+          console.log("Error", request.error);
+          throw request.error;
+        };
       };
-    };
+    });
   }
 
   static deleteProjectImage() {
