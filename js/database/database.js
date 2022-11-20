@@ -87,22 +87,20 @@ class Database {
   }
 
   static deleteProjectFromId(id) {
-    return new Promise(() => {
-      const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+    const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
-      dbOpenRequest.onerror = function () {
-        console.error("Error", dbOpenRequest.error);
-      };
+    dbOpenRequest.onerror = function () {
+      console.error("Error", dbOpenRequest.error);
+    };
 
-      dbOpenRequest.onsuccess = function () {
-        console.log("데이터 베이스 불러오기 성공");
-        const db = dbOpenRequest.result;
-        const transaction = db.transaction(DATA_STORE_NAME, "readwrite");
-        const projects = transaction.objectStore(DATA_STORE_NAME);
+    dbOpenRequest.onsuccess = function () {
+      console.log("데이터 베이스 불러오기 성공");
+      const db = dbOpenRequest.result;
+      const transaction = db.transaction(DATA_STORE_NAME, "readwrite");
+      const projects = transaction.objectStore(DATA_STORE_NAME);
 
-        projects.delete(id);
-      };
-    });
+      projects.delete(id);
+    };
   }
 
   static savePage() {
@@ -139,7 +137,7 @@ class Database {
     };
 
     dbOpenRequest.onsuccess = function () {
-      console.log("데이터 베이스 불러오기 성공");
+      console.log("이미지 데이터 베이스 불러오기 성공");
       const db = dbOpenRequest.result;
       const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
       const images = transaction.objectStore(IMAGE_STORE_NAME);
@@ -147,7 +145,7 @@ class Database {
       const request = images.put(imageObj);
 
       request.onsuccess = function () {
-        console.log("데이터 저장 성공");
+        console.log("이미지 데이터 저장 성공");
       };
 
       request.onerror = function () {
@@ -189,7 +187,7 @@ class Database {
     });
   }
 
-  static deleteProjectImage() {
+  static deleteImageFromId(id) {
     const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
     dbOpenRequest.onerror = function () {
@@ -203,10 +201,8 @@ class Database {
       const images = transaction.objectStore(IMAGE_STORE_NAME);
       const imageIndex = images.index("IMAGE_INDEX");
 
-      const id = Database.currentProject.id;
-      const pages = Database.currentProject.imageData.length;
       const imageCursor = imageIndex.openCursor(
-        IDBKeyRange.bound([id, 1], [id, pages])
+        IDBKeyRange.lowerBound([id, 0])
       );
 
       imageCursor.onsuccess = function () {

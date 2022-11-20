@@ -1,5 +1,5 @@
 class ChangeData {
-  static async deleteProejct(e) {
+  static deleteProejct(e) {
     const doDelete = confirm("정말로 프로젝트를 삭제하시겠습니까?");
 
     if (doDelete) {
@@ -21,7 +21,8 @@ class ChangeData {
       const dbDiv = e.target.closest(".db-div");
       dbDiv.remove();
 
-      await Database.deleteProjectFromId(id);
+      Database.deleteImageFromId(id);
+      Database.deleteProjectFromId(id);
     }
   }
 
