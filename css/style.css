@@ -1,12 +1,4 @@
 @import url("https://fonts.googleapis.com/earlyaccess/notosanskr.css");
-@import url("./font.css");
-@import url("./text-view.css");
-@import url("./image-view.css");
-@import url("./header.css");
-@import url("./control.css");
-@import url("./database-info.css");
-@import url("./char-view.css");
-@import url("./position-view.css");
 
 :root {
   --char-view-w: 140px;
