@@ -30,49 +30,29 @@ class ChangeData {
     const textTable = $("#text-table");
     let pageText = textTable.textContent;
 
+    if (pageText == "") return;
+
     const viewModeBtn = $("#view-mode");
     const mode = viewModeBtn.dataset.viewMode;
     const charList = CharTable.charList;
 
-    switch (mode) {
-      case "from":
-        pageText = changeLinebreakAndTab();
-        break;
-      case "to":
-        for (let i = 0; i < charList.to.length; i++) {
-          const toChar = charList.to[i];
-          const actualChar = charList.actual[i];
-          pageText = pageText.replace(toChar, actualChar);
-        }
-        break;
+    if (mode == "to") {
+      for (let i = 0; i < charList.to.length; i++) {
+        const toChar = charList.to[i];
+        const fromChar = charList.from[i];
+        pageText = pageText.replace(toChar, fromChar);
+      }
     }
 
     const pageIdx = Number(textTable.dataset.pageIdx);
     try {
-      Database.currentProject.info[pageIdx].changedText = pageText;
+      Database.currentProject.imageInfo[pageIdx].changedText = pageText;
       Database.currentProject.lastSaved = new Date();
-      Database.savePage();
+      Database.saveProject();
       DataView.updateLastSaved();
     } catch (error) {
       alert("데이터 저장에 실패했습니다.");
       console.log(error.name + ": " + error.message);
-    }
-
-    function changeLinebreakAndTab() {
-      let text = pageText;
-      if (charList.actual.includes("\n")) {
-        const linebreakIdx = charList.actual.indexOf("\n");
-        const linebreakTo = charList.to[linebreakIdx];
-        text = pageText.replace(linebreakTo, "\n");
-      }
-
-      if (charList.actual.includes("\t")) {
-        const tabIdx = charList.from.indexOf("\t");
-        const tabTo = charList.to[tabIdx];
-        text = pageText.replace(tabTo, "\t");
-      }
-
-      return text;
     }
   }
 }
