@@ -181,10 +181,6 @@ class TextView {
         for (let td of textViewTd) {
           if (charList.to.includes(td.innerText)) {
             const idx = charList.to.indexOf(td.innerText);
-            const actualChar = charList.actual[idx];
-            if (actualChar == "\n" || actualChar == "\t") {
-              continue;
-            }
             td.innerText = charList.from[idx];
           }
         }
@@ -205,41 +201,18 @@ class TextView {
     const charList = CharTable.charList;
     if (selectedTd) {
       let text;
-
-      switch (key) {
-        case "Enter":
-          if (charList.actual.includes("\n")) {
-            const idx = charList.actual.indexOf("\n");
-            const toChar = charList.to[idx];
-            text = toChar;
-          } else {
-            text = null;
-          }
-          break;
-        case "Tab":
-          if (charList.actual.includes("\t")) {
-            const idx = charList.acutal.indexOf("\t");
-            const toChar = charList.to[idx];
-            text = toChar;
-          } else {
-            text = null;
-          }
-          break;
-        default:
-          const btn = $("#view-mode");
-          const mode = btn.dataset.viewMode;
-          if (mode == "from") {
-            text = key;
-          } else if (mode == "to") {
-            if (charList.from.includes(key)) {
-              const idx = charList.from.indexOf(key);
-              const toChar = charList.to[idx];
-              text = toChar;
-            } else {
-              text = key;
-            }
-          }
-          break;
+      const btn = $("#view-mode");
+      const mode = btn.dataset.viewMode;
+      if (mode == "from") {
+        text = key;
+      } else if (mode == "to") {
+        if (charList.from.includes(key)) {
+          const idx = charList.from.indexOf(key);
+          const toChar = charList.to[idx];
+          text = toChar;
+        } else {
+          text = key;
+        }
       }
 
       if (text) {
