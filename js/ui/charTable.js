@@ -71,8 +71,8 @@ class CharTable {
     $("#to").value = "";
 
     function checkCharIsValid() {
-      const fromRegex = /^(?:[\u0020-\u007e]|\+=\/)$/;
-      const toRegex = /^(?:\d|[a-f]|[A-F]){4}$/;
+      const fromRegex = /^(?:[a-zA-Z0-9]|\+=\/)$/;
+      const toRegex = /^(?:[a-f0-9]){4}$/;
 
       const fromMatch = fromChar.match(fromRegex);
       const toMatch = toUnicodeChar.match(toRegex);
