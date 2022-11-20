@@ -11,9 +11,12 @@ class Database {
         keyPath: "id",
         autoIncrement: true,
       });
-      db.createObjectStore(IMAGE_STORE_NAME, {
+      const imageStore = db.createObjectStore(IMAGE_STORE_NAME, {
         keyPath: "id",
         autoIncrement: true,
+      });
+      imageStore.createIndex("IMAGE_INDEX", ["projectId", "page"], {
+        unique: true,
       });
       console.log("데이터 베이스 생성 성공");
     };
@@ -36,7 +39,6 @@ class Database {
       };
 
       dbOpenRequest.onsuccess = function () {
-        // 임시 데이터 추가하기
         console.log("데이터 베이스 불러오기 성공");
         const db = dbOpenRequest.result;
         const transaction = db.transaction(DATA_STORE_NAME, "readonly");
@@ -66,7 +68,6 @@ class Database {
       };
 
       dbOpenRequest.onsuccess = function () {
-        // 임시 데이터 추가하기
         console.log("데이터 베이스 불러오기 성공");
         const db = dbOpenRequest.result;
         const transaction = db.transaction(DATA_STORE_NAME, "readonly");
@@ -94,7 +95,6 @@ class Database {
       };
 
       dbOpenRequest.onsuccess = function () {
-        // 임시 데이터 추가하기
         console.log("데이터 베이스 불러오기 성공");
         const db = dbOpenRequest.result;
         const transaction = db.transaction(DATA_STORE_NAME, "readwrite");
@@ -113,7 +113,6 @@ class Database {
     };
 
     dbOpenRequest.onsuccess = function () {
-      // 임시 데이터 추가하기
       console.log("데이터 베이스 불러오기 성공");
       const db = dbOpenRequest.result;
       const transaction = db.transaction(DATA_STORE_NAME, "readwrite");
@@ -140,13 +139,12 @@ class Database {
     };
 
     dbOpenRequest.onsuccess = function () {
-      // 임시 데이터 추가하기
       console.log("데이터 베이스 불러오기 성공");
       const db = dbOpenRequest.result;
       const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
-      const projects = transaction.objectStore(IMAGE_STORE_NAME);
+      const images = transaction.objectStore(IMAGE_STORE_NAME);
 
-      const request = projects.put(imageObj);
+      const request = images.put(imageObj);
 
       request.onsuccess = function () {
         console.log("데이터 저장 성공");
@@ -154,7 +152,69 @@ class Database {
 
       request.onerror = function () {
         console.log("Error", request.error);
-        throw request.error;
+      };
+    };
+  }
+
+  static loadImage() {
+    const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+
+    dbOpenRequest.onerror = function () {
+      console.error("Error", dbOpenRequest.error);
+    };
+
+    dbOpenRequest.onsuccess = function () {
+      console.log("데이터 베이스 불러오기 성공");
+      const db = dbOpenRequest.result;
+      const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
+      const images = transaction.objectStore(IMAGE_STORE_NAME);
+      const imageIndex = images.index("IMAGE_INDEX");
+
+      const request = imageIndex.get(
+        IDBKeyRange.bound(
+          ["RANDOM_PROJECT_0494", 1],
+          ["RANDOM_PROJECT_0494", 1]
+        )
+      );
+
+      request.onsuccess = function () {
+        console.log("데이터 저장 성공");
+        console.log(request.result);
+      };
+
+      request.onerror = function () {
+        console.log("Error", request.error);
+        // throw request.error;
+      };
+    };
+  }
+
+  static deleteImage() {
+    const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
+
+    dbOpenRequest.onerror = function () {
+      console.error("Error", dbOpenRequest.error);
+    };
+
+    dbOpenRequest.onsuccess = function () {
+      console.log("데이터 베이스 불러오기 성공");
+      const db = dbOpenRequest.result;
+      const transaction = db.transaction(IMAGE_STORE_NAME, "readwrite");
+      const images = transaction.objectStore(IMAGE_STORE_NAME);
+      const imageIndex = images.index("IMAGE_INDEX");
+      const imageCursor = imageIndex.openCursor(
+        IDBKeyRange.bound(
+          ["RANDOM_PROJECT_0494", 1],
+          ["RANDOM_PROJECT_0494", 4]
+        )
+      );
+
+      imageCursor.onsuccess = function () {
+        const cursor = imageCursor.result;
+        if (cursor) {
+          cursor.delete();
+          cursor.continue();
+        }
       };
     };
   }
