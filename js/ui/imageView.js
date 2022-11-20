@@ -35,9 +35,6 @@ class ImageView {
     imageCanvas.height = 0;
     rectCanvas.width = 0;
     rectCanvas.height = 0;
-
-    // imageCanvas.style.width = "0";
-    // imageCanvas.style.height = "0";
   }
 
   static drawRectOnChar(index) {
