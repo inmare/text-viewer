@@ -103,7 +103,7 @@ class Database {
     };
   }
 
-  static savePage() {
+  static saveProject() {
     const dbOpenRequest = indexedDB.open(DATABASE_NAME, 1);
 
     dbOpenRequest.onerror = function () {
