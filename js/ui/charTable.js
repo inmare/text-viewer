@@ -44,7 +44,6 @@ class CharTable {
 
     this.charList.from.splice(tdIdx - 1, 1);
     this.charList.to.splice(tdIdx - 1, 1);
-    this.charList.actual.splice(tdIdx - 1, 1);
 
     function getTdIndex(td) {
       const delTdList = $("#del-char > td");
@@ -66,24 +65,13 @@ class CharTable {
 
     this.charList.from.push(fromChar);
     this.charList.to.push(toChar);
-    switch (fromChar) {
-      case "\\n":
-        this.charList.actual.push("\n");
-        break;
-      case "\\t":
-        this.charList.actual.push("\t");
-        break;
-      default:
-        this.charList.actual.push(fromChar);
-        break;
-    }
     this.appendCharToTable(fromChar, toChar);
 
     $("#from").value = "";
     $("#to").value = "";
 
     function checkCharIsValid() {
-      const fromRegex = /^(?:[\u0020-\u007e]|\\n|\\t)$/;
+      const fromRegex = /^(?:[\u0020-\u007e]|\+=\/)$/;
       const toRegex = /^(?:\d|[a-f]|[A-F]){4}$/;
 
       const fromMatch = fromChar.match(fromRegex);
@@ -92,7 +80,7 @@ class CharTable {
       if (!fromMatch) {
         return {
           result: false,
-          msg: "From에는 1글자의 아스키코드 혹은 \\n, \\t만 입력할 수 있습니다.",
+          msg: "From에는 Base64문자열에 들어가는 글자만 입력할 수 있습니다.",
         };
       }
 
