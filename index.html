@@ -122,7 +122,13 @@
           <div id="load-buttons">
             <div class="control-btn">
               <label for="load-file">파일에서 로드</label>
-              <input type="file" name="load-file" id="load-file" />
+              <input
+                type="file"
+                name="load-file"
+                id="load-file"
+                multiple="true"
+                accept="application/json,image/png,image/jpeg"
+              />
             </div>
             <button
               id="load-database"
