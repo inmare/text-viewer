@@ -3,7 +3,7 @@ class CharView {
     this.clearCharView();
 
     const lowCharList = page.lowPercentChar;
-    const charView = $("#char-view");
+    const charWrapper = $("#char-wrapper");
     for (let lowChar of lowCharList) {
       const template = $("#low-char-template");
       const lowCharDiv = template.content.cloneNode(true);
@@ -12,28 +12,27 @@ class CharView {
       const posSpan = lowCharDiv.querySelector("span[data-char-info='pos']");
 
       charSpan.innerText = lowChar.char;
-      posSpan.innerText = lowChar.index;
+      posSpan.innerText = lowChar.index + 1;
 
       const mainDiv = lowCharDiv.querySelector(".low-char");
       mainDiv.addEventListener("click", CharView.moveToSelectedChar);
       mainDiv.setAttribute("data-char-idx", lowChar.index);
 
-      charView.append(lowCharDiv);
+      charWrapper.append(lowCharDiv);
     }
   }
 
   static clearCharView() {
-    const charView = $("#char-view");
-    charView.innerHTML = "";
+    const charWrapper = $("#char-wrapper");
+    charWrapper.innerHTML = "";
   }
 
   static moveToSelectedChar(e) {
-    const charIndex = e.target.closest(".low-char").dataset.charIdx;
+    const charIndex = parseInt(e.target.closest(".low-char").dataset.charIdx);
 
     const charPerLine = Database.currentProject.charPerLine;
-    const linePerPage = Database.currentProject.linePerPage;
 
-    const linePos = Math.floor(charIndex / linePerPage);
+    const linePos = Math.floor(charIndex / charPerLine);
     const charPos = charIndex % charPerLine;
 
     const textTable = $("#text-table");
